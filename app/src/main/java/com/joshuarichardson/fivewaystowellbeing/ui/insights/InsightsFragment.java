@@ -173,17 +173,17 @@ public class InsightsFragment extends Fragment implements InsightsAdapter.DateCl
     public ActivityRecord getPlaceholderActivity(WaysToWellbeing wellbeingType) {
         switch (wellbeingType) {
             case CONNECT:
-                return new ActivityRecord(getString(R.string.connect_suggestion), 0, 0, ActivityType.PEOPLE, wellbeingType, false);
+                return new ActivityRecord(getString(R.string.connect_suggestion), 0, 0, ActivityType.PEOPLE, wellbeingType, false, 0);
             case BE_ACTIVE:
-                return new ActivityRecord(getString(R.string.be_active_suggestion), 0, 0, ActivityType.EXERCISE, wellbeingType, false);
+                return new ActivityRecord(getString(R.string.be_active_suggestion), 0, 0, ActivityType.EXERCISE, wellbeingType, false, 0);
             case KEEP_LEARNING:
-                return new ActivityRecord(getString(R.string.keep_learning_suggestion), 0, 0, ActivityType.HOBBY, wellbeingType, false);
+                return new ActivityRecord(getString(R.string.keep_learning_suggestion), 0, 0, ActivityType.HOBBY, wellbeingType, false, 0);
             case TAKE_NOTICE:
-                return new ActivityRecord(getString(R.string.take_notice_suggestion), 0, 0, ActivityType.JOURNALING, wellbeingType, false);
+                return new ActivityRecord(getString(R.string.take_notice_suggestion), 0, 0, ActivityType.JOURNALING, wellbeingType, false, 0);
             case GIVE:
-                return new ActivityRecord(getString(R.string.give_suggestion), 0, 0, ActivityType.CHORES, wellbeingType, false);
+                return new ActivityRecord(getString(R.string.give_suggestion), 0, 0, ActivityType.CHORES, wellbeingType, false, 0);
             default:
-                return new ActivityRecord(getString(R.string.default_suggestion), 0, 0, ActivityType.PEOPLE, WaysToWellbeing.CONNECT, false);
+                return new ActivityRecord(getString(R.string.default_suggestion), 0, 0, ActivityType.PEOPLE, WaysToWellbeing.CONNECT, false, 0);
         }
     }
 

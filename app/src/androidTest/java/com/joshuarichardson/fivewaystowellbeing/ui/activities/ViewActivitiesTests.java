@@ -79,9 +79,9 @@ public class ViewActivitiesTests {
             ActivityRecordDao activityDao = mock(ActivityRecordDao.class);
 
             List<ActivityRecord> data = Arrays.asList(
-                    new ActivityRecord("Activity name 1", 0, 587468, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false),
-                    new ActivityRecord("Activity name 2", 0, 587468, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false),
-                    new ActivityRecord("Activity name 3", 0, 587468, ActivityType.HOBBY, WaysToWellbeing.KEEP_LEARNING, false)
+                    new ActivityRecord("Activity name 1", 0, 587468, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false, 0),
+                    new ActivityRecord("Activity name 2", 0, 587468, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false, 0),
+                    new ActivityRecord("Activity name 3", 0, 587468, ActivityType.HOBBY, WaysToWellbeing.KEEP_LEARNING, false, 0)
             );
             LiveData<List<ActivityRecord>> liveData = new MutableLiveData<>(data);
 

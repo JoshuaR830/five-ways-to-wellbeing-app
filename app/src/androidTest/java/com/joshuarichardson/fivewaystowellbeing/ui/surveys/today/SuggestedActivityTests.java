@@ -65,11 +65,11 @@ public class SuggestedActivityTests extends ProgressFragmentTestFixture {
     protected void defaultResponses() {
         super.defaultResponses();
 
-        doReturn(new ActivityRecord("Run", 2000, 36776324, ActivityType.EXERCISE, WaysToWellbeing.BE_ACTIVE, false))
+        doReturn(new ActivityRecord("Run", 2000, 36776324, ActivityType.EXERCISE, WaysToWellbeing.BE_ACTIVE, false, 0))
             .when(this.activityRecordDao)
             .getActivityRecordById(1);
 
-        doReturn(new ActivityRecord("Cycle", 2000, 36776324, ActivityType.EXERCISE, WaysToWellbeing.BE_ACTIVE, false))
+        doReturn(new ActivityRecord("Cycle", 2000, 36776324, ActivityType.EXERCISE, WaysToWellbeing.BE_ACTIVE, false, 0))
             .when(this.activityRecordDao)
             .getActivityRecordById(2);
 

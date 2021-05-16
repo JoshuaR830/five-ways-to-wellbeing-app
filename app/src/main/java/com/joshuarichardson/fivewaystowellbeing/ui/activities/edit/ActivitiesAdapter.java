@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.joshuarichardson.fivewaystowellbeing.R;
 import com.joshuarichardson.fivewaystowellbeing.WaysToWellbeing;
 import com.joshuarichardson.fivewaystowellbeing.WellbeingHelper;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecord;
+import com.joshuarichardson.fivewaystowellbeing.ui.insights.WayToWellbeingImageColorizer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +36,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
     private final ActivityClickListener clickListener;
     private final ItemCountUpdateListener itemUpdateCallback;
     private boolean isEditable;
+    private Context context;
 
     public ActivitiesAdapter(Context context, List<ActivityRecord> activityItems, ActivityClickListener clickListener, ItemCountUpdateListener itemUpdateCallback) {
         this.inflater = LayoutInflater.from(context);
@@ -41,6 +44,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         this.activityItems.addAll(activityItems);
         this.clickListener = clickListener;
         this.itemUpdateCallback = itemUpdateCallback;
+        this.context = context;
     }
 
     @NonNull
@@ -139,6 +143,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
         private final ImageView image;
         private final View editContainer;
         private final TextView errorMessage;
+        private final FrameLayout frame;
 
         public ActivityViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -151,6 +156,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
             this.editButton = itemView.findViewById(R.id.edit_button);
             this.deleteButton = itemView.findViewById(R.id.delete_button);
             this.errorMessage = itemView.findViewById(R.id.error_message);
+            this.frame = itemView.findViewById(R.id.icon_image_frame);
         }
 
         /**
@@ -161,7 +167,7 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
          */
         public void onBind(ActivityRecord activity, ActivityClickListener clickListener) {
             this.nameTextView.setText(activity.getActivityName());
-            this.typeTextView.setText(activity.getActivityType());
+            this.typeTextView.setText(String.format("%s%s", activity.getActivityType().substring(0, 1), activity.getActivityType().substring(1).toLowerCase()));
 
             this.errorMessage.setVisibility(View.GONE);
             if(activity.getActivityWayToWellbeing().equals("UNASSIGNED")) {
@@ -184,6 +190,8 @@ public class ActivitiesAdapter extends RecyclerView.Adapter<ActivitiesAdapter.Ac
             } else {
                 this.editContainer.setVisibility(View.GONE);
             }
+
+            WayToWellbeingImageColorizer.colorizeFrame(ActivitiesAdapter.this.context, this.frame, WaysToWellbeing.valueOf(activity.getActivityWayToWellbeing()));
 
             // Edit and delete listeners
             this.editButton.setOnClickListener(v -> clickListener.onEditClick(v, activity));

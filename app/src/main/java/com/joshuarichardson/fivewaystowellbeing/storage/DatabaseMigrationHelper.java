@@ -238,4 +238,11 @@ public class DatabaseMigrationHelper {
             database.execSQL("DROP TABLE survey_response_element");
         }
     };
+
+    public static final Migration MIGRATION_12_13 = new Migration(12, 13) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE activity_records ADD COLUMN inspire_id INTEGER DEFAULT 0 NOT NULL");
+        }
+    };
 }
