@@ -103,4 +103,16 @@ public class InitialPreferencesHelper {
 
         preferenceEditor.apply();
     }
+
+    /**
+     * Set up the experimental features for the app
+     */
+    public void setUpExperimentalFeatures() {
+
+        if(!preferences.contains("notification_inspire_feed")) {
+            SharedPreferences.Editor preferenceEditor = preferences.edit();
+            preferenceEditor.putBoolean("notification_inspire_feed", true);
+            preferenceEditor.apply();
+        }
+    }
 }

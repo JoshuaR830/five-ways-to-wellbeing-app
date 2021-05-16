@@ -23,4 +23,10 @@
         android:name="com.joshuarichardson.fivewaystowellbeing.ui.history.HistoryParentFragment"
         tools:layout="@layout/fragment_view_surveys" />
 
+    <fragment
+        android:id="@+id/navigation_inspire_feed"
+        android:label="@string/inspire_feed"
+        android:name="com.joshuarichardson.fivewaystowellbeing.ui.inspire.InspireFragment"
+        tools:layout="@layout/fragment_inspire" />
+
 </navigation>

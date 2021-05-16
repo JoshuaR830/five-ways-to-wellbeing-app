@@ -65,15 +65,15 @@ public class InsightsTests extends ProgressFragmentTestFixture {
         super.defaultResponses();
 
         // Return the activities
-        doReturn(new ActivityRecord("Talk", 453876587, 784687, "PEOPLE", "CONNECT", false))
+        doReturn(new ActivityRecord("Talk", 453876587, 784687, "PEOPLE", "CONNECT", false, 0))
             .when(activityRecordDao)
             .getActivityRecordById(1);
 
-        doReturn(new ActivityRecord("Place holder", 453876587, 784687, "SPORT", "BE_ACTIVE", false))
+        doReturn(new ActivityRecord("Place holder", 453876587, 784687, "SPORT", "BE_ACTIVE", false, 0))
             .when(activityRecordDao)
             .getActivityRecordById(2);
 
-        doReturn(new ActivityRecord("Washing up", 453876587, 784687, "CHORES", "GIVE", false))
+        doReturn(new ActivityRecord("Washing up", 453876587, 784687, "CHORES", "GIVE", false, 0))
             .when(activityRecordDao)
             .getActivityRecordById(3);
 

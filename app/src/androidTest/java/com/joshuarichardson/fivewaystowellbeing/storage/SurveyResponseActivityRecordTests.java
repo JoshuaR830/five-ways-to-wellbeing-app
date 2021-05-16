@@ -62,9 +62,9 @@ public class SurveyResponseActivityRecordTests {
     public void insertionOfActivitySurvey_ThenGettingBySurveyId_ShouldReturnAllDetails() {
         SurveyResponse surveyResponse1 = new SurveyResponse(1607960245, "Be active", "title", "description");
         SurveyResponse surveyResponse2 = new SurveyResponse(1607960245, "Be active", "title", "description");
-        ActivityRecord activityRecord1 = new ActivityRecord("Running", 1200, 1607960240, "Sport", "UNASSIGNED", false);
-        ActivityRecord activityRecord2 = new ActivityRecord("Sprinting", 1200, 1607960240, "Sport", "UNASSIGNED", false);
-        ActivityRecord activityRecord3 = new ActivityRecord("Boating", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Running", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
+        ActivityRecord activityRecord2 = new ActivityRecord("Sprinting", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
+        ActivityRecord activityRecord3 = new ActivityRecord("Boating", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
 
         long surveyId1 = this.surveyResponseDao.insert(surveyResponse1);
         long surveyId2 = this.surveyResponseDao.insert(surveyResponse2);
@@ -125,9 +125,9 @@ public class SurveyResponseActivityRecordTests {
     public void insertionOfActivityRecordIdAndSurveyResponseId_AndGetActivitiesForSurvey_ShouldReturnTheActivitiesInSequenceOrder() throws TimeoutException, InterruptedException {
         SurveyResponse surveyResponse1 = new SurveyResponse(1607960245, "Be active", "title", "description");
         SurveyResponse surveyResponse2 = new SurveyResponse(1607960245, "Be active", "title", "description");
-        ActivityRecord activityRecord1 = new ActivityRecord("Running", 1200, 1607960240, "Sport", "UNASSIGNED", false);
-        ActivityRecord activityRecord2 = new ActivityRecord("Sprinting", 1200, 1607960240, "Sport", "UNASSIGNED", false);
-        ActivityRecord activityRecord3 = new ActivityRecord("Boating", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Running", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
+        ActivityRecord activityRecord2 = new ActivityRecord("Sprinting", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
+        ActivityRecord activityRecord3 = new ActivityRecord("Boating", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
 
         long surveyId1 = this.surveyResponseDao.insert(surveyResponse1);
         long surveyId2 = this.surveyResponseDao.insert(surveyResponse2);
@@ -177,8 +177,8 @@ public class SurveyResponseActivityRecordTests {
         long surveyId5 = this.surveyResponseDao.insert(surveyResponse5);
 
         // Create and insert an activity record
-        ActivityRecord activityRecord1 = new ActivityRecord("Throwing", 1200, 1607960240, "Sport", "UNASSIGNED", false);
-        ActivityRecord activityRecord2 = new ActivityRecord("Fishing", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Throwing", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
+        ActivityRecord activityRecord2 = new ActivityRecord("Fishing", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
 
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
         long activityId2 = this.activityRecordDao.insert(activityRecord2);
@@ -230,7 +230,7 @@ public class SurveyResponseActivityRecordTests {
         SurveyResponse surveyResponse = new SurveyResponse(1607960245, WaysToWellbeing.TAKE_NOTICE, "title", "description");
         long surveyId = this.surveyResponseDao.insert(surveyResponse);
 
-        ActivityRecord activityRecord = new ActivityRecord("Throwing", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord = new ActivityRecord("Throwing", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId = this.activityRecordDao.insert(activityRecord);
 
         SurveyResponseActivityRecord record = new SurveyResponseActivityRecord(surveyId, activityId, 1, "note 1",  1612427791, 1612427795, 1, false);
@@ -265,7 +265,7 @@ public class SurveyResponseActivityRecordTests {
     @Test
     public void insertingASurveyIdWhichDoesNotExist_ShouldThrowAConstraintException() {
         // Create and insert a real activity
-        ActivityRecord activityResult = new ActivityRecord("Running", 1200, 1607960240, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false);
+        ActivityRecord activityResult = new ActivityRecord("Running", 1200, 1607960240, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0);
         long activityRecordId = this.activityRecordDao.insert(activityResult);
 
         SurveyResponseActivityRecord record = new SurveyResponseActivityRecord(112233, activityRecordId, 1, "note 1",  1612427791, 1612427795, 1, false);
@@ -313,13 +313,13 @@ public class SurveyResponseActivityRecordTests {
         SurveyResponse surveyResponse = new SurveyResponse(1607960245, "Be active", "title", "description");
         long surveyResponseId = this.surveyResponseDao.insert(surveyResponse);
 
-        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
 
-        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId2 = this.activityRecordDao.insert(activityRecord2);
 
-        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId3 = this.activityRecordDao.insert(activityRecord3);
 
         // No emotions
@@ -364,13 +364,13 @@ public class SurveyResponseActivityRecordTests {
         long surveyResponseId4 = this.surveyResponseDao.insert(surveyResponse4);
         long surveyResponseId5 = this.surveyResponseDao.insert(surveyResponse5);
 
-        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
 
-        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId2 = this.activityRecordDao.insert(activityRecord2);
 
-        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId3 = this.activityRecordDao.insert(activityRecord3);
 
         // All emotion ranges
@@ -442,13 +442,13 @@ public class SurveyResponseActivityRecordTests {
         SurveyResponse surveyResponse = new SurveyResponse(1607960245, "Be active", "title", "description");
         long surveyResponseId = this.surveyResponseDao.insert(surveyResponse);
 
-        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
 
-        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId2 = this.activityRecordDao.insert(activityRecord2);
 
-        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId3 = this.activityRecordDao.insert(activityRecord3);
 
         this.surveyActivityDao.insert(new SurveyResponseActivityRecord(surveyResponseId, activityId1, 1, "note", -1, -1, 5, false));
@@ -465,13 +465,13 @@ public class SurveyResponseActivityRecordTests {
         SurveyResponse surveyResponse = new SurveyResponse(1607960245, "Be active", "title", "description");
         long surveyResponseId = this.surveyResponseDao.insert(surveyResponse);
 
-        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord1 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
 
-        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord2 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId2 = this.activityRecordDao.insert(activityRecord2);
 
-        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false);
+        ActivityRecord activityRecord3 = new ActivityRecord("Emotionless", 1200, 1607960240, "Sport", "UNASSIGNED", false, 0);
         long activityId3 = this.activityRecordDao.insert(activityRecord3);
 
         long activitySurveyId1 = this.surveyActivityDao.insert(new SurveyResponseActivityRecord(surveyResponseId, activityId1, 1, "note", -1, -1, 5, false));
@@ -499,10 +499,10 @@ public class SurveyResponseActivityRecordTests {
         long surveyResponseId3 = this.surveyResponseDao.insert(surveyResponse3);
 
         // Create activities
-        ActivityRecord activityRecord1 = new ActivityRecord("Activity 1", 1200, 1607960240, "Sport", "BE_ACTIVE", false);
-        ActivityRecord activityRecord2 = new ActivityRecord("Activity 2", 1300, 1607960240, "People", "CONNECT", false);
-        ActivityRecord activityRecord3 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", false);
-        ActivityRecord activityRecord4 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", true);
+        ActivityRecord activityRecord1 = new ActivityRecord("Activity 1", 1200, 1607960240, "Sport", "BE_ACTIVE", false, 0);
+        ActivityRecord activityRecord2 = new ActivityRecord("Activity 2", 1300, 1607960240, "People", "CONNECT", false, 0);
+        ActivityRecord activityRecord3 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", false, 0);
+        ActivityRecord activityRecord4 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", true, 0);
 
         // Insert activities
         long activityId1 = this.activityRecordDao.insert(activityRecord1);
@@ -545,10 +545,10 @@ public class SurveyResponseActivityRecordTests {
         long surveyResponseId3 = this.surveyResponseDao.insert(surveyResponse3);
 
         // Create activities
-        ActivityRecord activityRecord1 = new ActivityRecord("Activity 1", 1200, 1607960240, "Sport", "BE_ACTIVE", false);
-        ActivityRecord activityRecord2 = new ActivityRecord("Activity 2", 1300, 1607960240, "People", "CONNECT", false);
-        ActivityRecord activityRecord3 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", false);
-        ActivityRecord activityRecord4 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", true);
+        ActivityRecord activityRecord1 = new ActivityRecord("Activity 1", 1200, 1607960240, "Sport", "BE_ACTIVE", false, 0);
+        ActivityRecord activityRecord2 = new ActivityRecord("Activity 2", 1300, 1607960240, "People", "CONNECT", false, 0);
+        ActivityRecord activityRecord3 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", false, 0);
+        ActivityRecord activityRecord4 = new ActivityRecord("Activity 3", 1400, 1607960240, "Exercise", "BE_ACTIVE", true, 0);
 
         // Insert activities
         long activityId1 = this.activityRecordDao.insert(activityRecord1);

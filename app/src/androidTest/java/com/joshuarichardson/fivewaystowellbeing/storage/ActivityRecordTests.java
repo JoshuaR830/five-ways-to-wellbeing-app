@@ -58,7 +58,7 @@ public class ActivityRecordTests {
 
     @Test
     public void insertActivity_ThenGetById_ShouldReturnTheCorrectActivity() {
-        ActivityRecord insertedActivity = new ActivityRecord("Running", 1200, 1607960240, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false);
+        ActivityRecord insertedActivity = new ActivityRecord("Running", 1200, 1607960240, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0);
         long activityRecordId = this.activityDao.insert(insertedActivity);
         insertedActivity.setActivityRecordId(activityRecordId);
 
@@ -78,9 +78,9 @@ public class ActivityRecordTests {
 
         // Test inserting multiple activity records
         ArrayList<Long> insertedIds = DatabaseInsertionHelper.insert(new ActivityRecord[]{
-            new ActivityRecord("Jumping", 1201, 1607960241, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false),
-            new ActivityRecord("Swimming", 1202, 1607960242, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false),
-            new ActivityRecord("Throwing", 1203, 1607960243, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false)
+            new ActivityRecord("Jumping", 1201, 1607960241, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0),
+            new ActivityRecord("Swimming", 1202, 1607960242, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0),
+            new ActivityRecord("Throwing", 1203, 1607960243, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0)
         }, this.activityDao);
 
         assertThat(insertedIds.size())
@@ -97,14 +97,14 @@ public class ActivityRecordTests {
     @Test
     public void GetActivitiesInTimestampRange_ShouldOnlyReturnActivitiesBetweenSpecifiedTimestamps() {
         DatabaseInsertionHelper.insert(new ActivityRecord[]{
-                new ActivityRecord("Snapchat", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should not be included
-                new ActivityRecord("Google Photos", 1202, 1608076800, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should be included
-                new ActivityRecord("Phone", 1203, 1608076801, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should be included
-                new ActivityRecord("Facebook", 1204, 1608163199, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should be included
-                new ActivityRecord("Forest", 1204, 1608163200, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should be included
-                new ActivityRecord("Fishing", 1205, 1608163201, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false), // Should not be included
-                new ActivityRecord("Forest", 1204, 0, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should not be included (min)
-                new ActivityRecord("Play Store", 1204, 2147483647, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false), // Should not be included (max)
+                new ActivityRecord("Snapchat", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should not be included
+                new ActivityRecord("Google Photos", 1202, 1608076800, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should be included
+                new ActivityRecord("Phone", 1203, 1608076801, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should be included
+                new ActivityRecord("Facebook", 1204, 1608163199, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should be included
+                new ActivityRecord("Forest", 1204, 1608163200, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should be included
+                new ActivityRecord("Fishing", 1205, 1608163201, ActivityType.SPORT, WaysToWellbeing.UNASSIGNED, false, 0), // Should not be included
+                new ActivityRecord("Forest", 1204, 0, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should not be included (min)
+                new ActivityRecord("Play Store", 1204, 2147483647, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0), // Should not be included (max)
         }, this.activityDao);
 
         List<ActivityRecord> activities = this.activityDao.getActivitiesInTimeRange(1608076800, 1608163200);
@@ -116,10 +116,10 @@ public class ActivityRecordTests {
     @Test
     public void GetActivitiesThatAreNotHidden_ShouldOnlyReturnActivitiesThatAreVisible() throws TimeoutException, InterruptedException {
         DatabaseInsertionHelper.insert(new ActivityRecord[]{
-                new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, true),
-                new ActivityRecord("Activity 2", 1202, 1608076800, ActivityType.APP, WaysToWellbeing.UNASSIGNED, true),
-                new ActivityRecord("Activity 3", 1203, 1608076801, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false),
-                new ActivityRecord("Activity 4", 1204, 1608163199, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false),
+                new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, true, 0),
+                new ActivityRecord("Activity 2", 1202, 1608076800, ActivityType.APP, WaysToWellbeing.UNASSIGNED, true, 0),
+                new ActivityRecord("Activity 3", 1203, 1608076801, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0),
+                new ActivityRecord("Activity 4", 1204, 1608163199, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0),
         }, this.activityDao);
 
         List<ActivityRecord> activities = LiveDataTestUtil.getOrAwaitValue(this.activityDao.getAllActivities());
@@ -130,7 +130,7 @@ public class ActivityRecordTests {
 
     @Test
     public void updatingActivityRecords_ShouldUpdateTheRecord() throws TimeoutException, InterruptedException {
-        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false));
+        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0));
 
         this.activityDao.update(activityId, "Name", ActivityType.CHORES.toString(), WaysToWellbeing.GIVE.toString(), 1761472);
         ActivityRecord activity = this.activityDao.getActivityRecordById(activityId);
@@ -142,7 +142,7 @@ public class ActivityRecordTests {
 
     @Test
     public void hidingActivityRecords_ShouldStopThemFromBeingReturnedWithAllActivities() throws TimeoutException, InterruptedException {
-        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false));
+        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0));
 
         this.activityDao.flagHidden(activityId, true);
         List<ActivityRecord> allActivities = LiveDataTestUtil.getOrAwaitValue(this.activityDao.getAllActivities());
@@ -151,7 +151,7 @@ public class ActivityRecordTests {
 
     @Test
     public void hiddenActivityRecords_shouldStillBeReturnedFromActivityRecords() {
-        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false));
+        long activityId = this.activityDao.insert(new ActivityRecord("Activity 1", 1201, 1608076799, ActivityType.APP, WaysToWellbeing.UNASSIGNED, false, 0));
         long surveyResponseId = this.surveyResponseDao.insert(new SurveyResponse(734586743, WaysToWellbeing.BE_ACTIVE, "Title", "Description"));
         this.surveyActivityDao.insert(new SurveyResponseActivityRecord(surveyResponseId, activityId, 1, "Note", -1, -1, 5, false));
 

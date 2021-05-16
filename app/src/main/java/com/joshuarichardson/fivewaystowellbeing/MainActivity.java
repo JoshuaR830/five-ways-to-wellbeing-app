@@ -15,26 +15,25 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.AutomaticActivityTypes;
 import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.app_usage_tracking.AppUsageActivityTrackingService;
 import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.physical_activity_tracking.PhysicalActivityTracking;
 import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule;
 import com.joshuarichardson.fivewaystowellbeing.notifications.AlarmHelper;
-import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.AutomaticActivityTypes;
 import com.joshuarichardson.fivewaystowellbeing.storage.DatabaseQuestionHelper;
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase;
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphItem;
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphValueHelper;
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.AutomaticActivityDao;
-import com.joshuarichardson.fivewaystowellbeing.storage.dao.WellbeingQuestionDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.AutomaticActivity;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponse;
-import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingQuestion;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
-import com.joshuarichardson.fivewaystowellbeing.ui.history.HistoryParentFragment;
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.CreateOrUpdateActivityActivity;
+import com.joshuarichardson.fivewaystowellbeing.ui.history.HistoryParentFragment;
 import com.joshuarichardson.fivewaystowellbeing.ui.progress.ProgressFragment;
 
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -92,19 +91,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Display a welcome screen for first time users of this version
-        if(preferences.getInt("app_version", 0) < 6) {
-            this.dialog = new MaterialAlertDialogBuilder(this)
-                .setView(R.layout.new_features_auto_tracking)
-                .setPositiveButton(getString(R.string.tracking_dialog_positive_button), (dialog, which) -> {
-                    acceptPermissions();
-                    preferenceEditor.putInt("app_version", 6);
-                    preferenceEditor.apply();
-                }).show();
-        } else {
-            acceptPermissions();
-        }
-
         // The database version will only be updated after this so when migrating from 5 to 6 this will run
         if (preferences.getInt("database_version", 0) < 6) {
             backdateWellbeingResults();
@@ -124,14 +110,45 @@ public class MainActivity extends AppCompatActivity {
 
         preferencesHelper.setInitialNotificationPreferences(alarmHelper);
         preferencesHelper.setInitialPhysicalActivitySettings();
+        preferencesHelper.setUpExperimentalFeatures();
         DatabaseQuestionHelper.updateQuestions(preferences, db.wellbeingQuestionDao());
 
         startServiceAppTracking(preferences.getBoolean("notification_app_enabled", false));
 
+
+        // Display a welcome screen for first time users of this version
+        if(preferences.getInt("app_version", 0) < 6) {
+            this.dialog = new MaterialAlertDialogBuilder(this)
+                .setView(R.layout.new_features_auto_tracking)
+                .setPositiveButton(getString(R.string.tracking_dialog_positive_button), (dialog, which) -> {
+                    acceptPermissions();
+                    preferenceEditor.putInt("app_version", 6);
+                    preferenceEditor.apply();
+                }).show();
+            // What about first time
+//            Intent intent = new Intent(this, IntroActivity.class);
+//            preferenceEditor.putInt("app_version", 6);
+//            startActivity(intent);
+        } else {
+            acceptPermissions();
+        }
+
+        // This does all of the things and stuff for loading the bits you usually want
         // Bottom navigation
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationView);
 
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(R.id.navigation_progress, R.id.navigation_view_survey_responses, R.id.navigation_insights)
+        // Add bottom bar items to the set
+        HashSet<Integer> navigationBarItems = new HashSet<>();
+        navigationBarItems.add(R.id.navigation_progress);
+        navigationBarItems.add(R.id.navigation_view_survey_responses);
+        navigationBarItems.add(R.id.navigation_insights);
+
+        if(preferences.getBoolean("notification_inspire_feed", false)) {
+            bottomNav.getMenu().findItem(R.id.navigation_inspire_feed).setVisible(true);
+            navigationBarItems.add(R.id.navigation_inspire_feed);
+        }
+
+        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(navigationBarItems)
             .build();
 
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

@@ -76,9 +76,9 @@ public class AddingActivityToSurveyTests extends ProgressFragmentTestFixture {
         super.defaultResponses();
         LiveData<List<ActivityRecord>> activityData = new MutableLiveData<>(
             Arrays.asList(
-                new ActivityRecord("Activity 1", 2000, 123456, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false),
-                new ActivityRecord("Activity 2", 3000, 437724, ActivityType.HOBBY, WaysToWellbeing.KEEP_LEARNING, false),
-                new ActivityRecord("Activity 3", 3000, 437724, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false)
+                new ActivityRecord("Activity 1", 2000, 123456, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false, 0),
+                new ActivityRecord("Activity 2", 3000, 437724, ActivityType.HOBBY, WaysToWellbeing.KEEP_LEARNING, false, 0),
+                new ActivityRecord("Activity 3", 3000, 437724, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false, 0)
             )
         );
 
