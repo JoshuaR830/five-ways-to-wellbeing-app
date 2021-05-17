@@ -10,6 +10,7 @@ import androidx.room.PrimaryKey;
 
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_DURATION;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_ID;
+import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_INSPIRE_ID;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_IS_HIDDEN;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_NAME;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_TABLE_NAME;
@@ -49,13 +50,17 @@ public class ActivityRecord {
     @ColumnInfo(name = ACTIVITY_RECORD_IS_HIDDEN)
     private boolean isHidden;
 
-    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden) {
+    @ColumnInfo(name = ACTIVITY_RECORD_INSPIRE_ID)
+    private long inspireId;
+
+    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId) {
         this.setActivityName(activityName);
         this.setActivityDuration(activityDuration);
         this.setActivityTimestamp(activityTimestamp);
         this.setActivityType(activityType);
         this.setWayToWellbeing(activityWayToWellbeing);
         this.setIsHidden(isHidden);
+        this.setInspireId(inspireId);
     }
 
     private void setIsHidden(boolean isHidden) {
@@ -66,13 +71,14 @@ public class ActivityRecord {
         this.activityWayToWellbeing = wayToWellbeing;
     }
 
-    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, ActivityType activityType, WaysToWellbeing activityWayToWellbeing, boolean isHidden) {
+    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, ActivityType activityType, WaysToWellbeing activityWayToWellbeing, boolean isHidden, long inspireId) {
         this.setActivityName(activityName);
         this.setActivityDuration(activityDuration);
         this.setActivityTimestamp(activityTimestamp);
         this.setActivityType(activityType.toString());
         this.setWayToWellbeing(activityWayToWellbeing.toString());
         this.setIsHidden(isHidden);
+        this.setInspireId(inspireId);
     }
 
     public void setActivityRecordId(@NonNull long recordId) {
@@ -93,6 +99,10 @@ public class ActivityRecord {
 
     public void setActivityTimestamp(long timestamp) {
         this.activityTimestamp = timestamp;
+    }
+
+    private void setInspireId(long inspireId) {
+        this.inspireId = inspireId;
     }
 
     @NonNull
@@ -122,5 +132,9 @@ public class ActivityRecord {
 
     public boolean getIsHidden() {
         return this.isHidden;
+    }
+
+    public long getInspireId() {
+        return this.inspireId;
     }
 }

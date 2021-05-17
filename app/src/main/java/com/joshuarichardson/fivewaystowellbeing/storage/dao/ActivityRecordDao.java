@@ -80,4 +80,13 @@ public interface ActivityRecordDao {
      */
     @Query("UPDATE activity_records SET is_hidden = :isHidden WHERE id = :activityRecordId")
     void flagHidden(long activityRecordId, boolean isHidden);
+
+    @Query("SELECT lower(name) FROM activity_records WHERE is_hidden = 0")
+    List<String> getNamesOfAllVisibleActivitiesNotLive();
+
+    @Query("SELECT inspire_id FROM activity_records WHERE is_hidden = 0")
+    List<Long> getInspireIdsOfAllVisibleActivitiesNotLive();
+
+    @Query("UPDATE activity_records SET is_hidden = 1 WHERE inspire_id = :inspireId")
+    void hideByInspireId(long inspireId);
 }

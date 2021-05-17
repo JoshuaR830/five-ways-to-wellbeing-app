@@ -93,7 +93,7 @@ public class SurveyResponseTests {
         long surveyId3 = this.surveyResponseDao.insert(new SurveyResponse(922720202, WaysToWellbeing.CONNECT, "title", "description"));
         this.surveyResponseDao.insert(new SurveyResponse(922720203, WaysToWellbeing.GIVE, "title", "description"));
 
-        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false));
+        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false, 0));
 
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId1, activityRecord, 1, "note", -1, -1, 1, false));
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId2, activityRecord, 1, "note", -1, -1, 1, false));
@@ -117,7 +117,7 @@ public class SurveyResponseTests {
         long surveyId2 = this.surveyResponseDao.insert(new SurveyResponse(surveyTime2, WaysToWellbeing.BE_ACTIVE, "title", "description"));
         this.surveyResponseDao.insert(new SurveyResponse(surveyTime3, WaysToWellbeing.BE_ACTIVE, "title", "description"));
 
-        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false));
+        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false, 0));
 
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId1, activityRecord, 1, "note", -1, -1, 1, false));
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId2, activityRecord, 1, "note", -1, -1, 1, false));
@@ -142,7 +142,7 @@ public class SurveyResponseTests {
         long surveyId3 = this.surveyResponseDao.insert(new SurveyResponse(922720202, WaysToWellbeing.CONNECT, "title", "description"));
         long surveyId4 = this.surveyResponseDao.insert(new SurveyResponse(922720203, WaysToWellbeing.GIVE, "title", "description"));
 
-        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false));
+        long activityRecord = this.wellbeingDb.activityRecordDao().insert(new ActivityRecord("Name", 325768, 54389798, ActivityType.CHORES, WaysToWellbeing.GIVE, false, 0));
 
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId1, activityRecord, 1, "note", -1, -1, 1, false));
         this.wellbeingDb.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId2, activityRecord, 1, "note", -1, -1, 1, false));

@@ -224,7 +224,7 @@ public class CreateOrUpdateActivityActivity extends AppCompatActivity {
             if (this.activityId != 0 && this.isEditing) {
                 this.activityDao.update(this.activityId, name, type, wayToWellbeingString, unixTime);
             } else {
-                this.activityDao.insert(new ActivityRecord(name, duration, unixTime, type, wayToWellbeingString, false));
+                this.activityDao.insert(new ActivityRecord(name, duration, unixTime, type, wayToWellbeingString, false, 0));
             }
             finish();
         });

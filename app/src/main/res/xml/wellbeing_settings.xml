@@ -56,4 +56,13 @@
             app:icon="@drawable/icon_notification_night">
         </Preference>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/settings_category_experimental">
+        <SwitchPreference
+            android:key="notification_inspire_feed"
+            android:title="@string/inspire_feed"
+            app:icon="@drawable/notification_icon_inspire_feed">
+        </SwitchPreference>
+    </PreferenceCategory>
 </PreferenceScreen>

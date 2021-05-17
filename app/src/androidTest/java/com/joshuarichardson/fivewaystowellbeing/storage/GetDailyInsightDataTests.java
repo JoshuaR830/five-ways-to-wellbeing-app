@@ -55,8 +55,8 @@ public class GetDailyInsightDataTests {
 
         ActivityRecordDao activityRecordDao = wellbeingDb.activityRecordDao();
         // Insert 2 new activities
-        long activityRecordId1 = activityRecordDao.insert(new ActivityRecord("Activity name 1", 2000, 34625476, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false));
-        long activityRecordId2 = activityRecordDao.insert(new ActivityRecord("Activity name 2", 2000, 34625476, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false));
+        long activityRecordId1 = activityRecordDao.insert(new ActivityRecord("Activity name 1", 2000, 34625476, ActivityType.SPORT, WaysToWellbeing.BE_ACTIVE, false, 0));
+        long activityRecordId2 = activityRecordDao.insert(new ActivityRecord("Activity name 2", 2000, 34625476, ActivityType.LEARNING, WaysToWellbeing.KEEP_LEARNING, false, 0));
 
         // Create 3 new survey activity items
         SurveyResponseActivityRecord surveyResponseActivityRecord1 = new SurveyResponseActivityRecord(surveyResponseId1, activityRecordId1, 0, "Activity note", 123456, 234567, 1, false);
