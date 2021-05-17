@@ -31,6 +31,7 @@ import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponse;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.CreateOrUpdateActivityActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.history.HistoryParentFragment;
+import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.progress.ProgressFragment;
 
 import java.util.Calendar;
@@ -121,18 +122,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Display a welcome screen for first time users of this version
-        if(preferences.getInt("app_version", 0) < 6) {
-            this.dialog = new MaterialAlertDialogBuilder(this)
-                .setView(R.layout.new_features_auto_tracking)
-                .setPositiveButton(getString(R.string.tracking_dialog_positive_button), (dialog, which) -> {
-                    acceptPermissions();
-                    preferenceEditor.putInt("app_version", 6);
-                    preferenceEditor.apply();
-                }).show();
+        if(preferences.getInt("app_version", 0) < 7) {
+//            this.dialog = new MaterialAlertDialogBuilder(this)
+//                .setView(R.layout.new_features_auto_tracking)
+//                .setPositiveButton(getString(R.string.tracking_dialog_positive_button), (dialog, which) -> {
+//                    acceptPermissions();
+//                    preferenceEditor.putInt("app_version", 6);
+//                    preferenceEditor.apply();
+//                }).show();
             // What about first time
-//            Intent intent = new Intent(this, IntroActivity.class);
-//            preferenceEditor.putInt("app_version", 6);
-//            startActivity(intent);
+            Intent intent = new Intent(this, IntroActivity.class);
+            preferenceEditor.putInt("app_version", 6);
+            startActivity(intent);
         } else {
             acceptPermissions();
         }
