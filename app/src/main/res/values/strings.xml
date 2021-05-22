@@ -55,6 +55,8 @@
     <string name="wellbeing_give">Give</string>
     <string name="wellbeing_unassigned">None</string>
     <string name="days_active">Days logged</string>
+    <string name="five_ways_to_wellbeing">Five ways to wellbeing</string>
+    <string name="five_ways_to_wellbeing_description">The five ways to wellbeing provide areas of focus that help you maintain positive mental wellbeing. Think of it as your five a day for your mental wellbeing!</string>
 
     <string name="wellbeing_connect_description">Connect is all about building relationships, in person or over video call it all counts, what really matters is that you spend time getting to know each other deeply, build a sense of trust, go deeper than the superficial, and most importantly make time to listen.</string>
     <string name="wellbeing_be_active_description">Be active is all about getting in some exercise, whether that be grabbing your yoga mat and taking on the downward dog, going for a short walk during your lunch break or training for your next marathon, make sure to keep it at a level you are comfortable with, if you don\'t feel better, change it up until you find something you love.</string>
@@ -199,6 +201,15 @@
     <string name="stop_cycling">Stopped cycling</string>
     <string name="enter_vehicle">Enter vehicle</string>
     <string name="exit_vehicle">Exit vehicle</string>
+
+    <!-- Introductions -->
+    <string name="description_home">Log your daily activities for an overview of progress towards your five ways to wellbeing.</string>
+    <string name="description_insights">Compare your daily progress and see suggested activities.</string>
+    <string name="description_inspire_feed">Find and save inspirational activities that you want to try out.</string>
+    <string name="description_history">See your wellbeing logs from previous days and all the activities you have logged.</string>
+    <string name="description_settings">Change theme, automatic logging and notification settings.</string>
+    <string name="get_started">Get started</string>
+    <string name="welcome_title">Welcome</string>
 
     <!-- App tracking -->
     <string name="no_selection">-- None --</string>

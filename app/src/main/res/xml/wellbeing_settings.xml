@@ -65,4 +65,14 @@
             app:icon="@drawable/notification_icon_inspire_feed">
         </SwitchPreference>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/learn_more_title">
+        <Preference
+            android:title="@string/learn_more_title">
+            <intent
+                android:targetPackage="com.joshuarichardson.fivewaystowellbeing"
+                android:targetClass="com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity" />
+        </Preference>
+    </PreferenceCategory>
 </PreferenceScreen>
