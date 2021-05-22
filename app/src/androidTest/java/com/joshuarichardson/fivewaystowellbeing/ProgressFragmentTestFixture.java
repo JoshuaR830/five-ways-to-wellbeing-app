@@ -27,6 +27,7 @@ import dagger.hilt.android.testing.HiltAndroidRule;
 
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static org.mockito.ArgumentMatchers.any;
@@ -143,7 +144,17 @@ public abstract class ProgressFragmentTestFixture {
         WellbeingDatabaseModule.databaseExecutor.awaitTermination(7000, TimeUnit.MILLISECONDS);
         Context context = getInstrumentation().getTargetContext();
         SharedPreferences.Editor preferenceEditor = PreferenceManager.getDefaultSharedPreferences(context).edit();
-        preferenceEditor.putInt("app_version", 5);
+        preferenceEditor.putInt("app_version", 7);
+
+        try {
+            onView(withId(R.id.button_next)).perform(click());
+            onView(withId(R.id.button_next)).perform(click());
+            onView(withId(R.id.button_next)).perform(click());
+            onView(withId(R.id.button_next)).perform(click());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         try {
             onView(withText("Next")).perform(click());
         } catch (Exception e) {

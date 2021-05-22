@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.ChipGroup;
-import com.joshuarichardson.fivewaystowellbeing.LearnMoreAboutFiveWaysActivity;
+import com.joshuarichardson.fivewaystowellbeing.ui.learn_more.LearnMoreAboutFiveWaysActivity;
 import com.joshuarichardson.fivewaystowellbeing.MenuItemHelper;
 import com.joshuarichardson.fivewaystowellbeing.R;
 import com.joshuarichardson.fivewaystowellbeing.TimeFormatter;
