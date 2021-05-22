@@ -74,4 +74,14 @@
             android:title="@string/export_data"
             app:icon="@drawable/icon_export"/>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/learn_more_title">
+        <Preference
+            android:title="@string/learn_more_title">
+            <intent
+                android:targetPackage="com.joshuarichardson.fivewaystowellbeing"
+                android:targetClass="com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity" />
+        </Preference>
+    </PreferenceCategory>
 </PreferenceScreen>

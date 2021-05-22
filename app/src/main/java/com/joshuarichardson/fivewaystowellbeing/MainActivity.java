@@ -32,6 +32,7 @@ import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.CreateOrUpdateActivityActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.history.HistoryParentFragment;
 import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity;
+import com.joshuarichardson.fivewaystowellbeing.ui.learn_more.LearnMoreAboutFiveWaysActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.progress.ProgressFragment;
 
 import java.util.Calendar;
@@ -41,6 +42,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
@@ -67,6 +69,7 @@ import static com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
 @AndroidEntryPoint
 public class MainActivity extends AppCompatActivity {
     private static final int ACTIVITY_TRACKING_CODE = 1;
+    private static final int ACTIVITY_INTRODUCTION = 2;
     private AlertDialog dialog;
 
     @Inject
@@ -123,17 +126,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Display a welcome screen for first time users of this version
         if(preferences.getInt("app_version", 0) < 7) {
-//            this.dialog = new MaterialAlertDialogBuilder(this)
-//                .setView(R.layout.new_features_auto_tracking)
-//                .setPositiveButton(getString(R.string.tracking_dialog_positive_button), (dialog, which) -> {
-//                    acceptPermissions();
-//                    preferenceEditor.putInt("app_version", 6);
-//                    preferenceEditor.apply();
-//                }).show();
-            // What about first time
             Intent intent = new Intent(this, IntroActivity.class);
-            preferenceEditor.putInt("app_version", 6);
-            startActivity(intent);
+            preferenceEditor.putInt("app_version", 7);
+            startActivityForResult(intent, ACTIVITY_INTRODUCTION);
         } else {
             acceptPermissions();
         }
@@ -394,5 +389,21 @@ public class MainActivity extends AppCompatActivity {
     public void onLearnMoreButtonClicked(View view) {
         Intent learnMoreIntent = new Intent(this, LearnMoreAboutFiveWaysActivity.class);
         startActivity(learnMoreIntent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Only navigate to inspire feed if it exists
+//        if(!preferences.getBoolean("notification_inspire_feed", false)) {
+//            return;
+//        }
+//
+//        if(requestCode == ACTIVITY_INTRODUCTION) {
+//            ((BottomNavigationView)this.findViewById(R.id.bottomNavigationView)).setSelectedItemId(R.id.navigation_inspire_feed);
+//        }
     }
 }

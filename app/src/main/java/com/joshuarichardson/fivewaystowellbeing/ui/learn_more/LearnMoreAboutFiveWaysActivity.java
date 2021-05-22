@@ -1,9 +1,11 @@
-package com.joshuarichardson.fivewaystowellbeing;
+package com.joshuarichardson.fivewaystowellbeing.ui.learn_more;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+
+import com.joshuarichardson.fivewaystowellbeing.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +18,12 @@ public class LearnMoreAboutFiveWaysActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learn_more_about_five_ways);
+
+        View card = findViewById(R.id.wellbeing_education_card);
+        View button = findViewById(R.id.wellbeing_education_button);
+
+        card.setOnClickListener(this::onLearnMoreButtonClicked);
+        button.setOnClickListener(this::onLearnMoreButtonClicked);
     }
 
     /**

@@ -22,6 +22,7 @@
     <color name="translucent_way_to_wellbeing_give">#5579dc9d</color>
     <color name="translucent_way_to_wellbeing_keep_learning">#556ac8df</color>
     <color name="translucent_way_to_wellbeing_take_notice">#55c994e9</color>
+    <color name="translucent_way_to_wellbeing_unassigned">#55bec2cb</color>
 
     <color name="sentiment_worst">#ff7878</color>
     <color name="sentiment_bad">#ffa378</color>

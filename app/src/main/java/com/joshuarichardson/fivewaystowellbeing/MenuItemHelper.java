@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.view.MenuItem;
 
+import com.joshuarichardson.fivewaystowellbeing.ui.learn_more.LearnMoreAboutFiveWaysActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.settings.SettingsActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.history.AddMissedDayActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.wellbeing_support.WellbeingSupportActivity;

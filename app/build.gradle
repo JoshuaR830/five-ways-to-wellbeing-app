@@ -20,8 +20,8 @@ android {
         applicationId "com.joshuarichardson.fivewaystowellbeing_notifications"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 35
-        versionName "0.5.7"
+        versionCode 37
+        versionName "0.6.1"
 
         testInstrumentationRunner "com.joshuarichardson.fivewaystowellbeing.MockTestRunner"
         if(System.getenv("GITHUB_ACTIONS")) {
