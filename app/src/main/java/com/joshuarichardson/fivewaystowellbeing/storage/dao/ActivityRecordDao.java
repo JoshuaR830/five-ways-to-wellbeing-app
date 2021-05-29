@@ -53,6 +53,14 @@ public interface ActivityRecordDao {
     LiveData<List<ActivityRecord>> getAllActivities();
 
     /**
+     * Get all of the activities ever created that have not been hidden/deleted
+     *
+     * @return A static list of all activities
+     */
+    @Query("SELECT * FROM activity_records WHERE is_hidden = 0")
+    List<ActivityRecord> getAllActivitiesNotLive();
+
+    /**
      * Get all activities that have not been hidden/deleted
      *
      * @return A list of all activities

@@ -56,4 +56,13 @@
             app:icon="@drawable/icon_notification_night">
         </Preference>
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/import_export">
+        <Preference
+            android:fragment="com.joshuarichardson.fivewaystowellbeing.ui.settings.data.ExportData"
+            android:key="data_export"
+            android:title="@string/export_data"
+            app:icon="@drawable/icon_export"/>
+    </PreferenceCategory>
 </PreferenceScreen>

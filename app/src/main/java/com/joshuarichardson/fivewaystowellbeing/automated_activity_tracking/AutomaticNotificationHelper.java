@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.joshuarichardson.fivewaystowellbeing.MainActivity;
 import com.joshuarichardson.fivewaystowellbeing.NotificationConfiguration;
@@ -50,6 +51,8 @@ public class AutomaticNotificationHelper {
         }
 
         AutomaticActivityStatusInfo automaticActivityStatusInfo = getAutomaticActivityStatusInfo(automaticActivityType, appName);
+
+        Log.d("Status info:", automaticActivityStatusInfo.appName);
 
         // Create the confirmation pending intents
         Intent intent = new Intent(context, AddAutomaticActivityIntentService.class);
@@ -207,5 +210,10 @@ public class AutomaticNotificationHelper {
                     appName
                 );
         }
+    }
+
+    public void sendRunNotification() {
+        Log.d("Notifications", "Sent");
+        sendSuggestedActivityNotification(6, 1622076000000L, 1622076900000L, AutomaticActivityTypes.WALK, null, null);
     }
 }

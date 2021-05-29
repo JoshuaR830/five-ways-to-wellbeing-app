@@ -1,5 +1,6 @@
 package com.joshuarichardson.fivewaystowellbeing.storage.dao;
 
+import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
 
 import java.util.List;
@@ -55,4 +56,12 @@ public interface WellbeingResultsDao {
      */
     @Query("SELECT * FROM wellbeing_result WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp ASC")
     List<WellbeingResult> getResultsByTimestampRange(long startTime, long endTime);
+
+    /**
+     * Get all the wellbeing results ever recorded
+     *
+     * @return A static list of all wellbeing results
+     */
+    @Query("SELECT * FROM wellbeing_result")
+    List<WellbeingResult> getAllResults();
 }

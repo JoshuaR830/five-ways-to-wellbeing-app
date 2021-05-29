@@ -130,6 +130,13 @@ public interface SurveyResponseActivityRecordDao {
         "ORDER BY count(*) DESC")
     List<ActivityStats> getActivityFrequencyByWellbeingTypeBetweenTimes(long startTime, long endTime, String wayToWellbeing);
 
+    /**
+     * Get all the survey activities ever entered
+     *
+     * @return A static list of all survey activities
+     */
+    @Query("SELECT * FROM survey_activity")
+    List<SurveyResponseActivityRecord> getAllSurveyActivityRecords();
 
     /**
      * Test query - get survey activity for a given survey id

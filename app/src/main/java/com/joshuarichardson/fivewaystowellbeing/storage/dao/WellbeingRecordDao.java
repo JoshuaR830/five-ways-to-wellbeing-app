@@ -105,6 +105,15 @@ public interface WellbeingRecordDao {
     LiveData<List<WellbeingQuestion>> getFalseWellbeingRecordsByTimestampRangeAndWayToWellbeingType(long startTime, long endTime, String wayToWellbeing);
 
     /**
+     * Get all the wellbeing records ever recorded
+     *
+     * @return A static list of all wellbeing records
+     */
+    @Query("SELECT * FROM wellbeing_records")
+    List<WellbeingRecord> getAllWellbeingRecords();
+
+
+    /**
      * Test query - get all wellbeing records associated with an instance of an activity
      *
      * @param surveyActivityId The survey activity id of the activity instance to get the wellbeing records for

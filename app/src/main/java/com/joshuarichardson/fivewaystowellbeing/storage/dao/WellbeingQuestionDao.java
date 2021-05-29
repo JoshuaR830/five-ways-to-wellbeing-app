@@ -1,6 +1,7 @@
 package com.joshuarichardson.fivewaystowellbeing.storage.dao;
 
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphItem;
+import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponseActivityRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingQuestion;
 
 import java.util.List;
@@ -96,6 +97,14 @@ public interface WellbeingQuestionDao {
     List<WellbeingGraphItem> getWaysToWellbeingBetweenTimesNotLive(long startTime, long endTime);
 
     /**
+     * Get all the questions ever entered
+     *
+     * @return A static list of all questions
+     */
+    @Query("SELECT * FROM wellbeing_questions")
+    List<WellbeingQuestion> getAllWellbeingQuestions();
+
+    /**
      * Delete the selected wellbeing question
      *
      * @param wellbeingQuestion The question to delete
@@ -113,4 +122,5 @@ public interface WellbeingQuestionDao {
      */
     @Query("UPDATE wellbeing_questions SET question = :question, positive_message = :positiveMessage , negative_message = :negativeMessage WHERE wellbeing_questions.wellbeing_question_id = :id")
     void updateQuestion(long id, String question, String positiveMessage, String negativeMessage);
+
 }

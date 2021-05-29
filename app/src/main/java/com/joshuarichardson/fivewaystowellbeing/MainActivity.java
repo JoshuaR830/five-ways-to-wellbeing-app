@@ -15,6 +15,7 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.AutomaticNotificationHelper;
 import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.app_usage_tracking.AppUsageActivityTrackingService;
 import com.joshuarichardson.fivewaystowellbeing.automated_activity_tracking.physical_activity_tracking.PhysicalActivityTracking;
 import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule;
@@ -79,6 +80,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Inject
     InitialPreferencesHelper preferencesHelper;
+
+    @Inject
+    AutomaticNotificationHelper notificationHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,6 +305,8 @@ public class MainActivity extends AppCompatActivity {
         notification.cancel(NotificationConfiguration.NotificationsId.AUTOMATIC_ACTIVITY_NOTIFICATION_CYCLE);
         notification.cancel(NotificationConfiguration.NotificationsId.AUTOMATIC_ACTIVITY_NOTIFICATION_VEHICLE);
         notification.cancel(NotificationConfiguration.NotificationsId.AUTOMATIC_ACTIVITY_NOTIFICATION_APP);
+
+        notificationHelper.sendRunNotification();
     }
 
     @Override

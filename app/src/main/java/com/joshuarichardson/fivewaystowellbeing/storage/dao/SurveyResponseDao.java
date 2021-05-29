@@ -80,8 +80,15 @@ public interface SurveyResponseDao {
 
     /**
      * Test query - get all of the surveys
-     * @return A list of every survey
+     * @return An observable list of every survey
      */
     @Query("SELECT * FROM survey_response")
     LiveData<List<SurveyResponse>> getAllSurveyResponses();
+
+    /**
+     * Test query - get all of the surveys
+     * @return A static list of every survey
+     */
+    @Query("SELECT * FROM survey_response")
+    List<SurveyResponse> getAllSurveyResponsesNotLive();
 }

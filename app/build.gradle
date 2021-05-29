@@ -17,11 +17,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.joshuarichardson.fivewaystowellbeing"
+        applicationId "com.joshuarichardson.fivewaystowellbeing_notifications"
         minSdkVersion 24
         targetSdkVersion 30
-        versionCode 33
-        versionName "0.5.5"
+        versionCode 35
+        versionName "0.5.7"
 
         testInstrumentationRunner "com.joshuarichardson.fivewaystowellbeing.MockTestRunner"
         if(System.getenv("GITHUB_ACTIONS")) {
@@ -64,6 +64,7 @@ hilt {
 }
 
 dependencies {
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     def room_version = "2.2.6"
 
     implementation platform('com.google.firebase:firebase-bom:25.12.0')
