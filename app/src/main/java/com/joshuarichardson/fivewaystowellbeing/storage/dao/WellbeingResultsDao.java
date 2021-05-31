@@ -1,6 +1,5 @@
 package com.joshuarichardson.fivewaystowellbeing.storage.dao;
 
-import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
 
 import java.util.List;
@@ -64,4 +63,7 @@ public interface WellbeingResultsDao {
      */
     @Query("SELECT * FROM wellbeing_result")
     List<WellbeingResult> getAllResults();
+
+    @Query("INSERT INTO wellbeing_result (id, connect, be_active, keep_learning, take_notice, give, timestamp) VALUES (:id, :connectValue, :beActiveValue, :keepLearningValue, :takeNoticeValue, :giveValue, :timestamp) ON CONFLICT DO NOTHING")
+    void insertData(long id, int connectValue, int beActiveValue, int keepLearningValue, int takeNoticeValue, int giveValue, long timestamp);
 }

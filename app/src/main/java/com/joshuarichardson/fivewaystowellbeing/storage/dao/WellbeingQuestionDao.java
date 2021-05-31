@@ -1,7 +1,6 @@
 package com.joshuarichardson.fivewaystowellbeing.storage.dao;
 
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphItem;
-import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponseActivityRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingQuestion;
 
 import java.util.List;
@@ -123,4 +122,6 @@ public interface WellbeingQuestionDao {
     @Query("UPDATE wellbeing_questions SET question = :question, positive_message = :positiveMessage , negative_message = :negativeMessage WHERE wellbeing_questions.wellbeing_question_id = :id")
     void updateQuestion(long id, String question, String positiveMessage, String negativeMessage);
 
+    @Query("INSERT INTO wellbeing_questions (wellbeing_question_id, question, positive_message, negative_message, way_to_wellbeing, weighting, activity_type, input_type) VALUES (:id, :question, :positiveMessage, :negativeMessage, :wayToWellbeing, :weighting, :activityType, :inputType) ON CONFLICT DO NOTHING")
+    void insertData(long id, String question, String positiveMessage, String negativeMessage, String wayToWellbeing, int weighting, String activityType, String inputType);
 }

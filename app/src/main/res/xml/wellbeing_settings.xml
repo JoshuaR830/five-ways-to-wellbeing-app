@@ -76,9 +76,25 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+        android:title="@string/import_export">
+        <Preference
+            android:fragment="com.joshuarichardson.fivewaystowellbeing.ui.settings.data.ExportData"
+            android:key="data_export"
+            android:title="@string/export_data"
+            app:icon="@drawable/icon_export"/>
+
+        <Preference
+            android:fragment="com.joshuarichardson.fivewaystowellbeing.ui.settings.data.ImportData"
+            android:key="data_import"
+            android:title="@string/import_data"
+            app:icon="@drawable/icon_import"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
         android:title="@string/learn_more_title">
         <Preference
-            android:title="@string/learn_more_title">
+            android:title="@string/learn_more_title"
+            app:icon="@drawable/icon_learn_more">
             <intent
                 android:targetPackage="com.joshuarichardson.fivewaystowellbeing"
                 android:targetClass="com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity" />

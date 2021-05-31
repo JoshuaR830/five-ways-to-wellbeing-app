@@ -112,7 +112,6 @@ public interface WellbeingRecordDao {
     @Query("SELECT * FROM wellbeing_records")
     List<WellbeingRecord> getAllWellbeingRecords();
 
-
     /**
      * Test query - get all wellbeing records associated with an instance of an activity
      *
@@ -122,4 +121,6 @@ public interface WellbeingRecordDao {
     @Query("SELECT * FROM wellbeing_records WHERE survey_response_activity_record_id = :surveyActivityId ORDER BY sequence_number ASC")
     List<WellbeingRecord> getWellbeingRecordsBySurveyActivityId(long surveyActivityId);
 
+    @Query("INSERT INTO wellbeing_records (wellbeing_record_id, user_input, time, survey_response_activity_record_id, sequence_number, question_id) VALUES (:id, :userInput, :time, :surveyActivityId, :sequenceNumber, :questionId) ON CONFLICT DO NOTHING")
+    void insertData(long id, Boolean userInput, long time, long surveyActivityId, int sequenceNumber, long questionId);
 }

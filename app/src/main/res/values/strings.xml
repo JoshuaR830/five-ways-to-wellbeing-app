@@ -140,7 +140,9 @@
     <string name="settings_minimum_duration">Minimum duration mins</string>
     <string name="settings_category_experimental">Experimental settings</string>
     <string name="inspire_feed">Inspire</string>
-
+    <string name="import_export">App data</string>
+    <string name="export_data">Export</string>
+    <string name="import_data">Import</string>
 
     <string name="error_no_name_entered">Please enter a name</string>
     <string name="error_no_type_selected">Please choose a type</string>

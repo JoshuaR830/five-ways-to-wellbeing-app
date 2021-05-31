@@ -25,4 +25,28 @@ public class DataExport {
         this.wellbeingRecords = wellbeingRecords;
         this.wellbeingResults = wellbeingResults;
     }
+
+    public List<ActivityRecord> getActivityRecords() {
+        return activityRecords;
+    }
+
+    public List<SurveyResponse> getSurveyResponses() {
+        return surveyResponses;
+    }
+
+    public List<SurveyResponseActivityRecord> getSurveyActivityRecords() {
+        return surveyActivityRecords;
+    }
+
+    public List<WellbeingQuestion> getWellbeingQuestions() {
+        return wellbeingQuestions;
+    }
+
+    public List<WellbeingRecord> getWellbeingRecords() {
+        return wellbeingRecords;
+    }
+
+    public List<WellbeingResult> getWellbeingResults() {
+        return wellbeingResults;
+    }
 }

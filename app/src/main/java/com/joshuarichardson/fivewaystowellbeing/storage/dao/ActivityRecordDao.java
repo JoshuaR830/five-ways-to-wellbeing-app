@@ -89,6 +89,15 @@ public interface ActivityRecordDao {
     @Query("UPDATE activity_records SET is_hidden = :isHidden WHERE id = :activityRecordId")
     void flagHidden(long activityRecordId, boolean isHidden);
 
+    /**
+     * Associate an activity record with a schedule
+     *
+     * @param activityId the activity id to add to the schedule
+     * @param scheduleId the schedule to add the activity to
+     */
+    @Query("UPDATE activity_records SET schedule_id = :scheduleId WHERE id = :activityId")
+    void updateActivityRecordWithScheduleId(long activityId, long scheduleId);
+
     @Query("SELECT lower(name) FROM activity_records WHERE is_hidden = 0")
     List<String> getNamesOfAllVisibleActivitiesNotLive();
 
