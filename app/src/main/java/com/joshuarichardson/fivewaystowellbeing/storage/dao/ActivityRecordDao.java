@@ -53,6 +53,14 @@ public interface ActivityRecordDao {
     LiveData<List<ActivityRecord>> getAllActivities();
 
     /**
+     * Get all of the activities ever created that have not been hidden/deleted
+     *
+     * @return A static list of all activities
+     */
+    @Query("SELECT * FROM activity_records WHERE is_hidden = 0")
+    List<ActivityRecord> getAllActivitiesNotLive();
+
+    /**
      * Get all activities that have not been hidden/deleted
      *
      * @return A list of all activities
@@ -81,6 +89,15 @@ public interface ActivityRecordDao {
     @Query("UPDATE activity_records SET is_hidden = :isHidden WHERE id = :activityRecordId")
     void flagHidden(long activityRecordId, boolean isHidden);
 
+    /**
+     * Associate an activity record with a schedule
+     *
+     * @param activityId the activity id to add to the schedule
+     * @param scheduleId the schedule to add the activity to
+     */
+    @Query("UPDATE activity_records SET schedule_id = :scheduleId WHERE id = :activityId")
+    void updateActivityRecordWithScheduleId(long activityId, long scheduleId);
+
     @Query("SELECT lower(name) FROM activity_records WHERE is_hidden = 0")
     List<String> getNamesOfAllVisibleActivitiesNotLive();
 
@@ -89,4 +106,9 @@ public interface ActivityRecordDao {
 
     @Query("UPDATE activity_records SET is_hidden = 1 WHERE inspire_id = :inspireId")
     void hideByInspireId(long inspireId);
+
+
+    @Query("INSERT INTO activity_records (id, name, type, timestamp, duration, way_to_wellbeing, is_hidden, inspire_id) VALUES (:activityRecordId, :activityName, :activityType, :activityTimestamp, :activityDuration, :activityWayToWellbeing, :isHidden, :inspireId) ON CONFLICT DO NOTHING")
+    void insertData(long activityRecordId, String activityName, String activityType, long activityTimestamp, long activityDuration, String activityWayToWellbeing, boolean isHidden, long inspireId);
+
 }

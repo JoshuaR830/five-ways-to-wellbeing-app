@@ -6,6 +6,7 @@ import com.joshuarichardson.fivewaystowellbeing.WaysToWellbeing;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_DURATION;
@@ -13,6 +14,7 @@ import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingCo
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_INSPIRE_ID;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_IS_HIDDEN;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_NAME;
+import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_SCHEDULE_ID;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_TABLE_NAME;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_TIMESTAMP;
 import static com.joshuarichardson.fivewaystowellbeing.storage.WaysToWellbeingContract.ACTIVITY_RECORD_TYPE;
@@ -53,7 +55,24 @@ public class ActivityRecord {
     @ColumnInfo(name = ACTIVITY_RECORD_INSPIRE_ID)
     private long inspireId;
 
+    @ColumnInfo(name = ACTIVITY_RECORD_SCHEDULE_ID)
+    private long scheduleId;
+
+    @Ignore
     public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId) {
+        initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType, activityWayToWellbeing, isHidden, inspireId, 0);
+    }
+
+    @Ignore
+    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, ActivityType activityType, WaysToWellbeing activityWayToWellbeing, boolean isHidden, long inspireId) {
+        initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType.toString(), activityWayToWellbeing.toString(), isHidden, inspireId, 0);
+    }
+
+    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId, long scheduleId) {
+        initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType, activityWayToWellbeing, isHidden, inspireId, scheduleId);
+    }
+
+    private void initialiseActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId, long scheduleId) {
         this.setActivityName(activityName);
         this.setActivityDuration(activityDuration);
         this.setActivityTimestamp(activityTimestamp);
@@ -61,6 +80,7 @@ public class ActivityRecord {
         this.setWayToWellbeing(activityWayToWellbeing);
         this.setIsHidden(isHidden);
         this.setInspireId(inspireId);
+        this.setScheduleId(scheduleId);
     }
 
     private void setIsHidden(boolean isHidden) {
@@ -71,15 +91,6 @@ public class ActivityRecord {
         this.activityWayToWellbeing = wayToWellbeing;
     }
 
-    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, ActivityType activityType, WaysToWellbeing activityWayToWellbeing, boolean isHidden, long inspireId) {
-        this.setActivityName(activityName);
-        this.setActivityDuration(activityDuration);
-        this.setActivityTimestamp(activityTimestamp);
-        this.setActivityType(activityType.toString());
-        this.setWayToWellbeing(activityWayToWellbeing.toString());
-        this.setIsHidden(isHidden);
-        this.setInspireId(inspireId);
-    }
 
     public void setActivityRecordId(@NonNull long recordId) {
         this.activityRecordId = recordId;
@@ -103,6 +114,10 @@ public class ActivityRecord {
 
     private void setInspireId(long inspireId) {
         this.inspireId = inspireId;
+    }
+
+    private void setScheduleId(long scheduleId) {
+        this.scheduleId = scheduleId;
     }
 
     @NonNull
@@ -136,5 +151,9 @@ public class ActivityRecord {
 
     public long getInspireId() {
         return this.inspireId;
+    }
+
+    public long getScheduleId() {
+        return this.scheduleId;
     }
 }
