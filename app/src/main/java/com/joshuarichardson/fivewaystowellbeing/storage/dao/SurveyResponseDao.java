@@ -80,15 +80,19 @@ public interface SurveyResponseDao {
 
     /**
      * Test query - get all of the surveys
+     * @return A static list of every survey
+     */
+    @Query("SELECT * FROM survey_response")
+    List<SurveyResponse> getAllSurveyResponsesNotLive();
+
+    /**
+     * Test query - get all of the surveys
      * @return An observable list of every survey
      */
     @Query("SELECT * FROM survey_response")
     LiveData<List<SurveyResponse>> getAllSurveyResponses();
 
-    /**
-     * Test query - get all of the surveys
-     * @return A static list of every survey
-     */
-    @Query("SELECT * FROM survey_response")
-    List<SurveyResponse> getAllSurveyResponsesNotLive();
+    @Query("INSERT INTO survey_response (id, timestamp, way_to_wellbeing, title, description) VALUES (:surveyResponseId, :surveyResponseTimestamp, :surveyResponseWayToWellbeing, :title, :description) ON CONFLICT DO NOTHING")
+    void insertData(long surveyResponseId, long surveyResponseTimestamp, String surveyResponseWayToWellbeing, String title, String description);
+
 }

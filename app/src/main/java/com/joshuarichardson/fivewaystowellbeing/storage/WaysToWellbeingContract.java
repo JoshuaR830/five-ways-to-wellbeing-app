@@ -18,6 +18,7 @@ public class WaysToWellbeingContract {
     public static final String ACTIVITY_RECORD_WAY_TO_WELLBEING = "way_to_wellbeing";
     public static final String ACTIVITY_RECORD_IS_HIDDEN = "is_hidden";
     public static final String ACTIVITY_RECORD_INSPIRE_ID = "inspire_id";
+    public static final String ACTIVITY_RECORD_SCHEDULE_ID = "schedule_id";
 
     // Survey response
     public static final String SURVEY_RESPONSE_TABLE_NAME = "survey_response";
@@ -122,4 +123,12 @@ public class WaysToWellbeingContract {
     public static final String APP_USAGE_END_TIME = "end_time";
     public static final String APP_USAGE_MOST_RECENT_RESUME = "most_recent_resume_time";
     public static final String APP_USAGE_IS_PENDING = "is_pending";
+
+    // Activity schedules
+    public static final String ACTIVITY_SCHEDULES_TABLE_NAME = "activity_schedules";
+
+    public static final String ACTIVITY_SCHEDULES_ID = "id";
+    public static final String ACTIVITY_SCHEDULES_NAME = "name";
+    public static final String ACTIVITY_SCHEDULES_IMAGE = "image";
 }
+

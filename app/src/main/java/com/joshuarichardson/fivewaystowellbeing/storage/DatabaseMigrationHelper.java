@@ -245,4 +245,19 @@ public class DatabaseMigrationHelper {
             database.execSQL("ALTER TABLE activity_records ADD COLUMN inspire_id INTEGER DEFAULT 0 NOT NULL");
         }
     };
+
+
+    public static final Migration MIGRATION_13_14 = new Migration(13, 14) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE activity_records ADD COLUMN schedule_id INTEGER DEFAULT 0 NOT NULL");
+
+            database.execSQL("CREATE TABLE activity_schedules (" +
+                "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT NOT NULL, " +
+                "image TEXT NOT NULL " +
+                ");"
+            );
+        }
+    };
 }
