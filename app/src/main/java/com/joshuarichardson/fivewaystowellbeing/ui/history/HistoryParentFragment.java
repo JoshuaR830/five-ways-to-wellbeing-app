@@ -49,6 +49,8 @@ public class HistoryParentFragment extends Fragment {
                 tab.setText(R.string.wellbeing_logs_title);
             } else if (position == 1){
                 tab.setText(R.string.navigation_activities);
+            } else if (position == 2) {
+                tab.setText(R.string.activity_schedule);
             }
         })).attach();
     }

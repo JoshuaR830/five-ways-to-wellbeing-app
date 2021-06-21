@@ -1,6 +1,7 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.history;
 
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ActivityHistoryFragment;
+import com.joshuarichardson.fivewaystowellbeing.ui.schedules.ActivitySchedulesFragment;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -30,6 +31,9 @@ public class HistoryPagerAdapter extends FragmentStateAdapter {
         } else if(position == 1) {
             fragment = new ActivityHistoryFragment();
             return fragment;
+        } else if(position == 2) {
+            fragment = new ActivitySchedulesFragment();
+            return fragment;
         }
 
         return null;
@@ -37,6 +41,6 @@ public class HistoryPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 2;
+        return 3;
     }
 }

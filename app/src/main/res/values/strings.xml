@@ -28,6 +28,10 @@
     <string name="activity_duration">Activity duration</string>
     <string name="activity_type">Activity type</string>
 
+
+    <string name="schedule_title">Add schedule details</string>
+    <string name="schedule_name">Schedule name</string>
+
     <string name="survey_details_title">Wellbeing information</string>
     <string name="survey_input_title">Enter a title</string>
     <string name="survey_input_description">Enter a description</string>
@@ -40,6 +44,8 @@
     <string name="navigation_surveys">History</string>
     <string name="navigation_activities">Activities</string>
     <string name="navigation_insights">Insights</string>
+    <string name="activity_schedule">Schedules</string>
+    <string name="schedule_instance">Schedule</string>
 
     <string name="wellbeing_insight_prefix">Times achieved:</string>
     <string name="wellbeing_insight_activities">View your activities</string>

@@ -11,7 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.intro.IntroActivity" android:label="@string/welcome_title"/>
+        <activity android:name=".ui.schedules.list.ScheduleInstanceActivity"></activity>
+        <activity android:name=".ui.schedules.ScheduleViewActivity" />
+        <activity
+            android:name=".ui.schedules.create.CreateActivitySchedule"
+            android:label="@string/schedule_title" />
+        <activity
+            android:name=".ui.intro.IntroActivity"
+            android:label="@string/welcome_title" />
         <activity
             android:name=".ui.settings.apps.AppAssignmentActivity"
             android:label="@string/settings"

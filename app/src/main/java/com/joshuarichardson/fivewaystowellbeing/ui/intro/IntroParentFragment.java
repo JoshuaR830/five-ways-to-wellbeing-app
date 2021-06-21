@@ -50,25 +50,35 @@ public class IntroParentFragment extends Fragment {
             image.setOnClickListener((v) -> onDotClick(v, dotNumber));
         }
 
+        // ToDo - when scrolling backwards and forwards it does the wrong thing - NOOO - arrows don't work
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-            for (int i = 0; i < pageIndicatorContainer.getChildCount(); i ++) {
-                ImageView image = (ImageView) pageIndicatorContainer.getChildAt(i);
-                image.setImageResource(R.drawable.progress_circle_outline);
-            }
+                super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                for (int i = 0; i < pageIndicatorContainer.getChildCount(); i ++) {
+                    ImageView image = (ImageView) pageIndicatorContainer.getChildAt(i);
+                    image.setImageResource(R.drawable.progress_circle_outline);
+                }
 
-            if (position == 0) {
-                View card = getActivity().findViewById(R.id.wellbeing_education_card);
-                View button = getActivity().findViewById(R.id.wellbeing_education_button);
+                if (position == 0) {
+                    View card = getActivity().findViewById(R.id.wellbeing_education_card);
+                    View button = getActivity().findViewById(R.id.wellbeing_education_button);
+                    previousButton.setVisibility(View.INVISIBLE);
 
-                card.setOnClickListener((v) -> ((LearnMoreAboutFiveWaysActivity)getActivity()).onLearnMoreButtonClicked(v));
-                button.setOnClickListener((v) -> ((LearnMoreAboutFiveWaysActivity)getActivity()).onLearnMoreButtonClicked(v));
-            }
+                    card.setOnClickListener((v) -> ((IntroActivity)getActivity()).onLearnMoreButtonClicked(v));
+                    button.setOnClickListener((v) -> ((IntroActivity)getActivity()).onLearnMoreButtonClicked(v));
+                } else {
+                    previousButton.setVisibility(View.VISIBLE);
+                }
 
-            ImageView selectedImage = (ImageView) pageIndicatorContainer.getChildAt(position);
-            selectedImage.setImageResource(R.drawable.progress_circle_filled);
+                if (position == pageIndicatorContainer.getChildCount() - 1) {
+                    nextButton.setImageResource(R.drawable.icon_tick);
+                } else {
+                    nextButton.setImageResource(R.drawable.button_arrow);
+                }
+
+                ImageView selectedImage = (ImageView) pageIndicatorContainer.getChildAt(position);
+                selectedImage.setImageResource(R.drawable.progress_circle_filled);
             }
         });
 

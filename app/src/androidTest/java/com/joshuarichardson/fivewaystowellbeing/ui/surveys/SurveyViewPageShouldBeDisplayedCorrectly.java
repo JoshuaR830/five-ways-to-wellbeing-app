@@ -87,7 +87,7 @@ public class SurveyViewPageShouldBeDisplayedCorrectly extends ProgressFragmentTe
         // Check that the image is displayed
         onView(withId(R.id.app_assignment_recycler))
             .perform(scrollToPosition(0))
-            .check(matches(atRecyclerPosition(0, hasDescendant(allOf(withId(R.id.survey_list_title), withText("29 Apr 1972"))))))
+            .check(matches(atRecyclerPosition(0, hasDescendant(allOf(withId(R.id.schedule_name), withText("29 Apr 1972"))))))
             .check(matches(atRecyclerPosition(0, hasDescendant(allOf(withId(R.id.survey_list_description), withText("A survey description"))))))
             .check(matches(atRecyclerPosition(0, hasDescendant(allOf(withId(R.id.view_more_button), withText("View more"))))))
             .check(matches(atRecyclerPosition(0, hasDescendant(withId(R.id.surveys_completed_frame_layout)))))
@@ -98,7 +98,7 @@ public class SurveyViewPageShouldBeDisplayedCorrectly extends ProgressFragmentTe
         // Check that the graph is displayed and that the image is not
         onView(withId(R.id.app_assignment_recycler))
             .perform(scrollToPosition(1))
-            .check(matches(atRecyclerPosition(1, hasDescendant(allOf(withId(R.id.survey_list_title), withText("29 Mar 1999"))))))
+            .check(matches(atRecyclerPosition(1, hasDescendant(allOf(withId(R.id.schedule_name), withText("29 Mar 1999"))))))
             .check(matches(atRecyclerPosition(1, hasDescendant(allOf(withId(R.id.survey_list_description), withText("Another survey description"))))))
             .check(matches(atRecyclerPosition(1, hasDescendant(allOf(withId(R.id.view_more_button), withText("View more"))))))
             .check(matches(atRecyclerPosition(1, hasDescendant(withId(R.id.surveys_completed_frame_layout)))))

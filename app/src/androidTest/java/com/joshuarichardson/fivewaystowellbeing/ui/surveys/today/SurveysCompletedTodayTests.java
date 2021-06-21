@@ -42,7 +42,6 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.when;
 
 @HiltAndroidTest
 @UninstallModules(WellbeingDatabaseModule.class)
@@ -91,7 +90,7 @@ public class SurveysCompletedTodayTests extends ProgressFragmentTestFixture {
 
     @Test
     public void WhenMultipleActivitiesAreAddedToASurvey_ThenAllActivitiesShouldBeDisplayed() {
-        onView(allOf(withId(R.id.survey_list_title), isDescendantOfA(withId(R.id.survey_summary_item_container))))
+        onView(allOf(withId(R.id.schedule_name), isDescendantOfA(withId(R.id.survey_summary_item_container))))
             .perform(scrollTo())
             .check(matches(allOf(isDisplayed(), withText("Today"))));
 

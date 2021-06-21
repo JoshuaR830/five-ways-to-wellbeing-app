@@ -128,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         if(preferences.getInt("app_version", 0) < 7) {
             Intent intent = new Intent(this, IntroActivity.class);
             preferenceEditor.putInt("app_version", 7);
+            preferenceEditor.apply();
             startActivityForResult(intent, ACTIVITY_INTRODUCTION);
         } else {
             acceptPermissions();

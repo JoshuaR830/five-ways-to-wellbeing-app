@@ -6,6 +6,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -41,14 +42,14 @@ import com.joshuarichardson.fivewaystowellbeing.storage.entity.AutomaticActivity
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponse;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.SurveyResponseActivityRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
+import com.joshuarichardson.fivewaystowellbeing.surveys.ActivityInstance;
 import com.joshuarichardson.fivewaystowellbeing.surveys.SurveyDataHelper;
 import com.joshuarichardson.fivewaystowellbeing.surveys.SurveyDay;
-import com.joshuarichardson.fivewaystowellbeing.surveys.ActivityInstance;
+import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity;
 import com.joshuarichardson.fivewaystowellbeing.ui.graphs.WellbeingGraphView;
 import com.joshuarichardson.fivewaystowellbeing.ui.individual_surveys.ActivityViewHelper;
 import com.joshuarichardson.fivewaystowellbeing.ui.individual_surveys.WellbeingRecordInsertionHelper;
 import com.joshuarichardson.fivewaystowellbeing.ui.insights.WayToWellbeingImageColorizer;
-import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity;
 
 import java.util.Calendar;
 import java.util.List;
@@ -335,39 +336,79 @@ public class ProgressFragment extends Fragment {
         }
 
         if (requestCode == ACTIVITY_REQUEST_CODE) {
-            if (data.getExtras() == null || !data.hasExtra("activity_id")) {
+
+            if (data.getExtras() == null) {
                 return;
             }
 
-            long activityId = data.getExtras().getLong("activity_id", -1);
-            String activityType = data.getExtras().getString("activity_type", "");
-            String activityName = data.getExtras().getString("activity_name", "");
-            String wayToWellbeing = data.getExtras().getString("activity_way_to_wellbeing", "UNASSIGNED");
+            boolean hasScheduleId = false;
+            boolean hasActivityId = false;
 
-            if (activityId == -1) {
-                return;
+            if (data.hasExtra("schedule_id")) {
+                hasScheduleId = true;
             }
 
-            analyticsHelper.logWayToWellbeingActivity(this, WaysToWellbeing.valueOf(wayToWellbeing));
+            if (data.hasExtra("activity_id")) {
+                hasActivityId = true;
+            }
 
-            // Sequence number based on number of children in the linear layout
-            LinearLayout activityContainer = requireActivity().findViewById(R.id.survey_item_container);
+            boolean isEdited = data.getExtras().getBoolean("is_edited", false);
 
-            WellbeingDatabaseModule.databaseExecutor.execute(() -> {
-                int sequenceNumber = this.db.surveyResponseActivityRecordDao().getItemCount(surveyId) + 1;
-                long activitySurveyId = this.db.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId, activityId, sequenceNumber, "", -1, -1, 0, false));
-                ActivityInstance activityInstance = new ActivityInstance(activityName, "", activityType, wayToWellbeing, activitySurveyId, -1, -1, 0, false);
-                ActivityInstance updatedActivity = WellbeingRecordInsertionHelper.addActivityQuestions(this.db, activitySurveyId, activityType, activityInstance, Calendar.getInstance().getTimeInMillis());
+            if (hasScheduleId) {
 
-                // If it has been edited, the page will reload everything
-                boolean isEdited = data.getExtras().getBoolean("is_edited", false);
-                if(isEdited) {
-                    updateSurveyItems();
-                } else {
-                    ActivityViewHelper.createActivityItem(requireActivity(), activityContainer, updatedActivity, this.db, getParentFragmentManager(), analyticsHelper, true);
-                }
-            });
+                long scheduleId = data.getExtras().getLong("schedule_id", 0);
+
+                WellbeingDatabaseModule.databaseExecutor.execute(() -> {
+
+                    List<ActivityRecord> activityRecords = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleIdNotLive(scheduleId);
+
+                    requireActivity().runOnUiThread(() -> {
+                        for (ActivityRecord record : activityRecords) {
+                            Log.d("Activity record", String.valueOf(record.getActivityRecordId()));
+                            processIndividualItem(record.getActivityRecordId(), record.getActivityType(), record.getActivityName(), record.getActivityWayToWellbeing(), false);
+                        }
+                    });
+
+                    // Needs to have written all of the items to DB first
+                    if((isEdited)) {
+                        updateSurveyItems();
+                    }
+
+                });
+            } else if (hasActivityId) {
+                long activityId = data.getExtras().getLong("activity_id", -1);
+                String activityType = data.getExtras().getString("activity_type", "");
+                String activityName = data.getExtras().getString("activity_name", "");
+                String wayToWellbeing = data.getExtras().getString("activity_way_to_wellbeing", "UNASSIGNED");
+                processIndividualItem(activityId, activityType, activityName, wayToWellbeing, isEdited);
+            }
         }
+    }
+
+    private void processIndividualItem(long activityId, String activityType, String activityName, String wayToWellbeing, boolean isEdited) {
+
+        if (activityId == -1) {
+            return;
+        }
+
+        analyticsHelper.logWayToWellbeingActivity(this, WaysToWellbeing.valueOf(wayToWellbeing));
+
+        // Sequence number based on number of children in the linear layout
+        LinearLayout activityContainer = requireActivity().findViewById(R.id.survey_item_container);
+
+        WellbeingDatabaseModule.databaseExecutor.execute(() -> {
+            int sequenceNumber = this.db.surveyResponseActivityRecordDao().getItemCount(surveyId) + 1;
+            long activitySurveyId = this.db.surveyResponseActivityRecordDao().insert(new SurveyResponseActivityRecord(surveyId, activityId, sequenceNumber, "", -1, -1, 0, false));
+            ActivityInstance activityInstance = new ActivityInstance(activityName, "", activityType, wayToWellbeing, activitySurveyId, -1, -1, 0, false);
+            ActivityInstance updatedActivity = WellbeingRecordInsertionHelper.addActivityQuestions(this.db, activitySurveyId, activityType, activityInstance, Calendar.getInstance().getTimeInMillis());
+
+            // If it has been edited, the page will reload everything
+            if(isEdited) {
+                updateSurveyItems();
+            } else {
+                ActivityViewHelper.createActivityItem(requireActivity(), activityContainer, updatedActivity, this.db, getParentFragmentManager(), analyticsHelper, true);
+            }
+        });
     }
 
     @Override

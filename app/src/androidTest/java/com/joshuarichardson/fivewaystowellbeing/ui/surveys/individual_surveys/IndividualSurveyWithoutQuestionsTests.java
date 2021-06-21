@@ -141,7 +141,7 @@ public class IndividualSurveyWithoutQuestionsTests {
     public void whenOnIndividualSurveyPage_AllActivitiesShouldBeDisplayed() throws InterruptedException {
         WellbeingDatabaseModule.databaseExecutor.awaitTermination(5000, TimeUnit.MILLISECONDS);
 
-        onView(allOf(withId(R.id.survey_list_title), isDescendantOfA(withId(R.id.survey_summary_item_container))))
+        onView(allOf(withId(R.id.schedule_name), isDescendantOfA(withId(R.id.survey_summary_item_container))))
             .perform(scrollTo())
             .check(matches(withText("29 Mar 1999")));
 
