@@ -49,7 +49,7 @@ public class NoSurveysCompletedTodayTests extends ProgressFragmentTestFixture {
 
     @Test
     public void WhenNoActivitiesAddedToSurvey_ThenTheCardShouldDisplayAddActivityButton() {
-        onView(allOf(withId(R.id.survey_list_title), isDescendantOfA(withId(R.id.survey_summary_item_container))))
+        onView(allOf(withId(R.id.schedule_name), isDescendantOfA(withId(R.id.survey_summary_item_container))))
             .perform(scrollTo())
             .check(matches(allOf(isDisplayed(), withText("Today"))));
 

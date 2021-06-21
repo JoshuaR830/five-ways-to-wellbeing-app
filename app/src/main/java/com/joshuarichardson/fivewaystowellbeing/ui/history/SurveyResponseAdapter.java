@@ -79,7 +79,7 @@ public class SurveyResponseAdapter extends RecyclerView.Adapter<SurveyResponseAd
 
         public SurveyResponseViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.surveyTitle =  itemView.findViewById(R.id.survey_list_title);
+            this.surveyTitle =  itemView.findViewById(R.id.schedule_name);
             this.surveyDescription = itemView.findViewById(R.id.survey_list_description);
             this.surveyItemFrame = itemView.findViewById(R.id.surveys_completed_frame_layout);
             this.viewMoreButton = itemView.findViewById(R.id.view_more_button);

@@ -96,7 +96,7 @@ public class ActivityViewHelper {
             long currentTime = TimeHelper.getStartOfDay(Calendar.getInstance().getTimeInMillis());
 
             if (surveyTime != currentTime && surveyTime >= 0) {
-                TextView surveyTitle = todaySurveyContainer.findViewById(R.id.survey_list_title);
+                TextView surveyTitle = todaySurveyContainer.findViewById(R.id.schedule_name);
                 surveyTitle.setText(surveyData.getTitle());
             }
 

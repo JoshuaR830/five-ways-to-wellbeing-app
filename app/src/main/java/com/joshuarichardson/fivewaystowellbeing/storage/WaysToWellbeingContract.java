@@ -18,7 +18,6 @@ public class WaysToWellbeingContract {
     public static final String ACTIVITY_RECORD_WAY_TO_WELLBEING = "way_to_wellbeing";
     public static final String ACTIVITY_RECORD_IS_HIDDEN = "is_hidden";
     public static final String ACTIVITY_RECORD_INSPIRE_ID = "inspire_id";
-    public static final String ACTIVITY_RECORD_SCHEDULE_ID = "schedule_id";
 
     // Survey response
     public static final String SURVEY_RESPONSE_TABLE_NAME = "survey_response";
@@ -130,5 +129,12 @@ public class WaysToWellbeingContract {
     public static final String ACTIVITY_SCHEDULES_ID = "id";
     public static final String ACTIVITY_SCHEDULES_NAME = "name";
     public static final String ACTIVITY_SCHEDULES_IMAGE = "image";
+
+    // Schedule activity table
+    public static final String ACTIVITY_RECORD_ACTIVITY_SCHEDULE_LINK_TABLE_NAME = "activity_record_activity_schedule_link";
+
+    public static final String ACTIVITY_RECORD_ACTIVITY_SCHEDULE_LINK_ID = "id";
+    public static final String ACTIVITY_RECORD_ACTIVITY_SCHEDULE_LINK_SCHEDULE_ID = "schedule_id";
+    public static final String ACTIVITY_RECORD_ACTIVITY_SCHEDULE_LINK_ACTIVITY_ID = "activity_id";
 }
 

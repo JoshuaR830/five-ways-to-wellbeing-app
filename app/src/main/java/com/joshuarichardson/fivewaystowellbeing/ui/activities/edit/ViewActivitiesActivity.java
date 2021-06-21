@@ -2,6 +2,7 @@ package com.joshuarichardson.fivewaystowellbeing.ui.activities.edit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -42,12 +43,34 @@ public class ViewActivitiesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_edit) {
+            Log.d("Hello", "Edit clicked");
+            Log.d("Hello", getSupportFragmentManager().findFragmentById(R.id.activities_fragment).getClass().getName());
             if(getSupportFragmentManager().findFragmentById(R.id.activities_fragment).getClass() == ActivityHistoryFragment.class) {
                 ActivityHistoryFragment viewSurveyResponseFragment = (ActivityHistoryFragment) getSupportFragmentManager().findFragmentById(R.id.activities_fragment);
                 if(viewSurveyResponseFragment == null) {
                     return false;
                 }
                 viewSurveyResponseFragment.makeActivitiesEditable();
+            }
+
+//            if(findViewById(R.id.activity_recycler_view) != null) {
+//                Log.d("Possible match","NOT NULL");
+//            }
+
+            if(getSupportFragmentManager().getFragments().get(0).getClass() == ActivityScheduleParentFragment.class) {
+                ActivityScheduleParentFragment viewSurveyResponseFragment = (ActivityScheduleParentFragment) getSupportFragmentManager().findFragmentById(R.id.activities_fragment);
+                if(viewSurveyResponseFragment == null) {
+                    return false;
+                }
+                viewSurveyResponseFragment.makeActivitiesEditable();
+            }
+
+            if(getSupportFragmentManager().getFragments().get(0).getClass() == ActivityScheduleParentFragment.class) {
+                ActivityScheduleParentFragment viewSurveyResponseFragment = (ActivityScheduleParentFragment) getSupportFragmentManager().findFragmentById(R.id.activities_fragment);
+                if(viewSurveyResponseFragment == null) {
+                    return false;
+                }
+                viewSurveyResponseFragment.makeSchedulesEditable();
             }
             return true;
         }

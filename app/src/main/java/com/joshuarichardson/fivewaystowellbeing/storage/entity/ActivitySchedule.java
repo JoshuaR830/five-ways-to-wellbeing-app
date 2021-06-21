@@ -15,15 +15,15 @@ public class ActivitySchedule {
     @NonNull
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = ACTIVITY_SCHEDULES_ID)
-    public long id;
+    private long id;
 
     @NonNull
     @ColumnInfo(name = ACTIVITY_SCHEDULES_NAME)
-    public String name;
+    private String name;
 
     @NonNull
     @ColumnInfo(name = ACTIVITY_SCHEDULES_IMAGE)
-    public String image;
+    private String image;
 
     public ActivitySchedule(String name, String image) {
         this.name = name;

@@ -1,5 +1,6 @@
 package com.joshuarichardson.fivewaystowellbeing.storage;
 
+import com.joshuarichardson.fivewaystowellbeing.storage.dao.ActivityRecordActivityScheduleLinkDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.ActivityRecordDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.ActivityScheduleDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.AppActivityDao;
@@ -10,6 +11,7 @@ import com.joshuarichardson.fivewaystowellbeing.storage.dao.WellbeingQuestionDao
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.WellbeingRecordDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.dao.WellbeingResultsDao;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecord;
+import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecordActivitySchedule;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.AppActivity;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.AutomaticActivity;
@@ -27,7 +29,7 @@ import static com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
 /**
  * The room database that is injected whenever it is needed
  */
-@Database(entities = {ActivityRecord.class, SurveyResponse.class, SurveyResponseActivityRecord.class, WellbeingQuestion.class, WellbeingRecord.class, WellbeingResult.class, AutomaticActivity.class, AppActivity.class, ActivitySchedule.class}, exportSchema = false, version = DATABASE_VERSION_CODE)
+@Database(entities = {ActivityRecord.class, SurveyResponse.class, SurveyResponseActivityRecord.class, WellbeingQuestion.class, WellbeingRecord.class, WellbeingResult.class, AutomaticActivity.class, AppActivity.class, ActivitySchedule.class, ActivityRecordActivitySchedule.class}, exportSchema = false, version = DATABASE_VERSION_CODE)
 public abstract class WellbeingDatabase extends RoomDatabase {
 
     public static final int DATABASE_VERSION_CODE = 14;
@@ -41,4 +43,5 @@ public abstract class WellbeingDatabase extends RoomDatabase {
     public abstract AutomaticActivityDao physicalActivityDao();
     public abstract AppActivityDao appActivityDao();
     public abstract ActivityScheduleDao activityScheduleDao();
+    public abstract ActivityRecordActivityScheduleLinkDao activityRecordActivityScheduleLinkDao();
 }
