@@ -16,4 +16,10 @@ interface ActivityScheduleDao {
 
     @Query("SELECT * FROM activity_schedules")
     fun getAllLiveSchedules() : Flow<List<ActivitySchedule>>
+
+    @Query("UPDATE activity_schedules SET name = :name WHERE id = :scheduleId")
+    fun update(scheduleId: Long, name: String)
+
+    @Query("DELETE FROM activity_schedules WHERE id = :scheduleId")
+    fun deleteById(scheduleId: Long)
 }

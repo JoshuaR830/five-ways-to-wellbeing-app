@@ -3,6 +3,7 @@ package com.joshuarichardson.fivewaystowellbeing.ui.schedules.create
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputLayout
 import com.joshuarichardson.fivewaystowellbeing.R
@@ -17,9 +18,22 @@ class CreateActivitySchedule : AppCompatActivity() {
     @Inject
     lateinit var db : WellbeingDatabase
 
+    var scheduleId : Long = -1;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_activity_schedule)
+
+        if (intent.extras == null)
+            return;
+
+        scheduleId = intent.extras!!.getLong("schedule_id", -1)
+        var scheduleName = intent.extras!!.getString("schedule_name", "")
+
+        if (scheduleId > 0) {
+            var scheduleNameInput = findViewById<TextView>(R.id.activity_name_input)
+            scheduleNameInput.text = scheduleName
+        }
     }
 
     fun onSubmit(view : View) {
@@ -40,7 +54,11 @@ class CreateActivitySchedule : AppCompatActivity() {
         if(hasError) return
 
         WellbeingDatabaseModule.databaseExecutor.execute {
-            db.activityScheduleDao().insert(ActivitySchedule(name, ""))
+            if(scheduleId == -1L) {
+                db.activityScheduleDao().insert(ActivitySchedule(name, ""))
+            } else {
+                db.activityScheduleDao().update(scheduleId, name)
+            }
         }
 
         finish();

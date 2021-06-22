@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.NonNull
@@ -53,16 +54,28 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
 
         val nameText: TextView
         val scheduleImage: ImageView
-        var isEditingItem: Boolean = false;
+        var isEditingItem: Boolean = false
+        val deleteButton: ImageButton
+        val editButton: ImageButton
 
 
         init {
             nameText =  itemView.findViewById(R.id.schedule_name);
             scheduleImage = itemView.findViewById(R.id.schedule_image)
+            deleteButton = itemView.findViewById(R.id.delete_image_button)
+            editButton = itemView.findViewById(R.id.edit_image_button)
         }
 
         fun onBind(selectedSchedule : ActivitySchedule) {
             selectedSchedule.id
+
+            deleteButton.setOnClickListener {
+                scheduleItemClicked.deleteSchedule(selectedSchedule.id)
+            }
+
+            editButton.setOnClickListener {
+                scheduleItemClicked.renameSchedule(selectedSchedule.id, selectedSchedule.name)
+            }
 
             Log.d("IsEditable", isEditable.toString())
 
@@ -100,9 +113,13 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
            if(this.isEditingItem) {
               var px : Float = DisplayHelper.dpToPx(context, -142).toFloat();
                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
+               deleteButton.isClickable = true
+               editButton.isClickable = true
                animation.start()
            } else {
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
+                deleteButton.isClickable = false
+                editButton.isClickable = false
                 animation.start()
            }
        }
@@ -112,4 +129,7 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
 interface OnScheduleItemClick {
     fun itemClicked(schedule: ActivitySchedule)
     fun itemLongClicked(schedule: ActivitySchedule, viewHolder: ActivityScheduleViewHolder)
+
+    fun deleteSchedule(scheduleId: Long)
+    fun renameSchedule(scheduleId: Long, scheduleName : String)
 }
