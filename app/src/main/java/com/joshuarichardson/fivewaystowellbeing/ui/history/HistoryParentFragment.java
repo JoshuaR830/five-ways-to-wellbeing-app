@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayoutMediator;
 import com.joshuarichardson.fivewaystowellbeing.R;
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase;
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ActivityHistoryFragment;
+import com.joshuarichardson.fivewaystowellbeing.ui.schedules.ActivitySchedulesFragment;
 
 import javax.inject.Inject;
 
@@ -74,6 +75,18 @@ public class HistoryParentFragment extends Fragment {
 
             ActivityHistoryFragment activityFragment = (ActivityHistoryFragment) activeFragment;
             activityFragment.makeActivitiesEditable();
+        } else if (tabLayout.getSelectedTabPosition() == 2) {
+            Fragment activeFragment = getChildFragmentManager().findFragmentByTag("f2");
+            if (activeFragment == null) {
+                return;
+            }
+
+            if (activeFragment.getClass() != ActivitySchedulesFragment.class) {
+                return;
+            }
+
+            ActivitySchedulesFragment scheduleFragment = (ActivitySchedulesFragment) activeFragment;
+            scheduleFragment.makeSchedulesEditable();
         }
     }
 }

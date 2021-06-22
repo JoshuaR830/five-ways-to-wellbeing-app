@@ -1,6 +1,5 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.schedules
 
-import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -11,14 +10,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
-import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.ItemTouchHelper.SimpleCallback
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.joshuarichardson.fivewaystowellbeing.MainActivity
 import com.joshuarichardson.fivewaystowellbeing.R
 import com.joshuarichardson.fivewaystowellbeing.R.layout.fragment_activity_schedules
+import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity
@@ -148,6 +147,34 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         viewHolder.doTheThing()
     }
 
+    override fun deleteSchedule(scheduleId: Long) {
+
+        MaterialAlertDialogBuilder(requireActivity())
+            .setTitle(R.string.title_delete_schedule)
+            .setMessage(R.string.body_delete_schedule)
+            .setIcon(R.drawable.icon_close)
+            .setPositiveButton(R.string.button_delete) { dialog, which ->
+                // Set the pass time to hidden
+                WellbeingDatabaseModule.databaseExecutor.execute {
+                    this.db.activityScheduleDao().deleteById(scheduleId)
+                }
+            }
+            .setNegativeButton(R.string.button_cancel) { dialog, which -> }
+            .create()
+            .show()
+    }
+
+    override fun renameSchedule(scheduleId: Long, scheduleName : String) {
+
+        val activityIntent = Intent(requireActivity(), CreateActivitySchedule::class.java)
+        val bundle = Bundle()
+        bundle.putLong("schedule_id", scheduleId)
+        bundle.putString("schedule_name", scheduleName)
+        activityIntent.putExtras(bundle)
+
+        startActivityForResult(activityIntent, CREATE_SURVEY_REQUEST_CODE)
+    }
+
 //    override fun onPause() {
 //        super.onPause()
 //
@@ -168,8 +195,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
 
 
     fun makeSchedulesEditable() {
-
-
         this.isEditable = !this.isEditable
 
         Log.d("Make editable", this.isEditable.toString())
