@@ -26,6 +26,7 @@ public class ViewActivitiesActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_activities);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public void onCreateActivityButtonClicked(View v) {
@@ -42,6 +43,11 @@ public class ViewActivitiesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
         if (item.getItemId() == R.id.action_edit) {
             Log.d("Hello", "Edit clicked");
             Log.d("Hello", getSupportFragmentManager().findFragmentById(R.id.activities_fragment).getClass().getName());

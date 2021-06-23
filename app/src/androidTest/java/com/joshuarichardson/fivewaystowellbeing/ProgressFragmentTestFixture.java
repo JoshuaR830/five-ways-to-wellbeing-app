@@ -151,6 +151,7 @@ public abstract class ProgressFragmentTestFixture {
             onView(withId(R.id.button_next)).perform(click());
             onView(withId(R.id.button_next)).perform(click());
             onView(withId(R.id.button_next)).perform(click());
+            onView(withId(R.id.button_next)).perform(click());
         } catch (Exception e) {
             e.printStackTrace();
         }

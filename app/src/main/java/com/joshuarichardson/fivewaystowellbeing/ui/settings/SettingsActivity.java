@@ -2,12 +2,14 @@ package com.joshuarichardson.fivewaystowellbeing.ui.settings;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.joshuarichardson.fivewaystowellbeing.R;
 import com.joshuarichardson.fivewaystowellbeing.notifications.AlarmHelper;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.preference.Preference;
@@ -77,6 +79,8 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
 //         Reference: https://developer.android.com/guide/topics/ui/settings#java
         getSupportFragmentManager()
             .beginTransaction()
@@ -105,6 +109,15 @@ public class SettingsActivity extends AppCompatActivity implements PreferenceFra
             .commit();
 
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

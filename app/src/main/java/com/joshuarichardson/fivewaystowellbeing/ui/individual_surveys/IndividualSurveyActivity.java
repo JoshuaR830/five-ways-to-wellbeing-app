@@ -77,6 +77,8 @@ public class IndividualSurveyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_individual_survey);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         Intent surveyIntent = getIntent();
         if(surveyIntent == null || surveyIntent.getExtras() == null) {
             finish();
@@ -284,6 +286,11 @@ public class IndividualSurveyActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
 
         // When the user clicks delete toggle it
         if (item.getItemId() == R.id.action_delete) {

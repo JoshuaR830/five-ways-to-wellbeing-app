@@ -1,6 +1,7 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.history;
 
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.joshuarichardson.fivewaystowellbeing.R;
 import com.joshuarichardson.fivewaystowellbeing.TimeHelper;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +37,7 @@ public class AddMissedDayActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_missed_day);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         RecyclerView recycler = findViewById(R.id.missing_item_recycler_view);
         recycler.setLayoutManager(new LinearLayoutManager(this));
@@ -69,5 +72,14 @@ public class AddMissedDayActivity extends AppCompatActivity {
 
         // Observe the empty values
         surveyResponseDao.getEmptyHistoryPageData().observe(this, historyObserver);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

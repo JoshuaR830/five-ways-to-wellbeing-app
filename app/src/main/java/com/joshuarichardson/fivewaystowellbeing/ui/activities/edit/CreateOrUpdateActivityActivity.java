@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -27,6 +28,7 @@ import java.util.Calendar;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -49,6 +51,8 @@ public class CreateOrUpdateActivityActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_activity);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         AutoCompleteTextView dropDownInput = findViewById(R.id.activity_type_input);
 
@@ -228,5 +232,15 @@ public class CreateOrUpdateActivityActivity extends AppCompatActivity {
             }
             finish();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

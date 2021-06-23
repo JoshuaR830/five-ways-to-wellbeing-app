@@ -21,7 +21,7 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
     val inflater : LayoutInflater = LayoutInflater.from(context)
     val scheduleItemClicked = scheduleItemClicked;
     var schedules : List<ActivitySchedule> = scheduleList;
-    var isEditable: Int = -1;
+    var isEditable: Boolean = false;
     var context: Context = context
     var nextAction : Int = -1
 
@@ -41,35 +41,17 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
         holder.onBind(selectedSchedule)
     }
 
-    fun editableList(isEditable : Boolean) {
+    fun editableList() {
 
         if(nextAction == -1) {
-            if(this.isEditable == -1) {
-                if(isEditable) {
-                    this.isEditable = 1
-                } else {
-                    this.isEditable = 0
-                }
-            } else {
-                if (this.isEditable == 0) {
-                    this.isEditable = 1
-                } else {
-                    this.isEditable = 0
-                }
-            }
+            this.isEditable = !this.isEditable
         } else {
-            this.isEditable = nextAction
-            nextAction = -1
+            this.isEditable = nextAction == 1
         }
 
+        nextAction = -1
         notifyDataSetChanged()
     }
-//
-//    fun refactoredEditableList() {
-//        if (nextAction == -1) {
-//            this.refactoredIsEditable
-//        }
-//    }
 
     inner class ActivityScheduleViewHolder(@NonNull itemView : View) : RecyclerView.ViewHolder(itemView) {
 
@@ -115,13 +97,13 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
 //                hide()
 //                animation.start()
 //            }
-            if (isEditable == 1) {
+            if (isEditable) {
                 this.isEditingItem = true
                 var px : Float = DisplayHelper.dpToPx(context, -144).toFloat();
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
                 show()
                 animation.start()
-            } else if (isEditable == 0){
+            } else {
                 this.isEditingItem = false
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
                 hide()
