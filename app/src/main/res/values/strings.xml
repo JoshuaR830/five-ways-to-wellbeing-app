@@ -30,6 +30,7 @@
 
 
     <string name="schedule_title">Add schedule details</string>
+    <string name="schedule">Schedule</string>
     <string name="schedule_name">Schedule name</string>
 
     <string name="survey_details_title">Wellbeing information</string>

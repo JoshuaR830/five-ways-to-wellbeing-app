@@ -42,6 +42,9 @@ class ScheduleInstanceActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         setContentView(R.layout.activity_schedule_instance)
 
         if(!intent.hasExtra("schedule_id"))
@@ -167,10 +170,13 @@ class ScheduleInstanceActivity : AppCompatActivity() {
             }
 
             Log.d("Pressed it", "edit")
-        }
 
-        // Invert it after
-        this.isEditable = !this.isEditable;
+            // Invert it after
+            this.isEditable = !this.isEditable;
+        }
+        else if (item.itemId == android.R.id.home) {
+            onBackPressed()
+        }
 
         return super.onOptionsItemSelected(item)
     }

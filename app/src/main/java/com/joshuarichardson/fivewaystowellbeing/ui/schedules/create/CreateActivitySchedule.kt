@@ -1,6 +1,7 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.schedules.create
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
@@ -23,6 +24,7 @@ class CreateActivitySchedule : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_activity_schedule)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true);
 
         if (intent.extras == null)
             return;
@@ -62,5 +64,14 @@ class CreateActivitySchedule : AppCompatActivity() {
         }
 
         finish();
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

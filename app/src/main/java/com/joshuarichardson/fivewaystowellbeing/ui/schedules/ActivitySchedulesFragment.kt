@@ -40,7 +40,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         MutableLiveData<List<ActivitySchedule>>()
     }
 
-    private var isEditable: Boolean = false
     var scheduleAdapter : ActivityScheduleAdapter? = null;
 
     companion object {
@@ -225,12 +224,8 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
 
 
     fun makeSchedulesEditable() {
-        this.isEditable = !this.isEditable
-
-        Log.d("Make editable", this.isEditable.toString())
-
         // This updates the recycler view and filters it by the search term for better navigation
-        this.scheduleAdapter?.editableList(this.isEditable)
+        this.scheduleAdapter?.editableList()
 //        this.scheduleAdapter?.refactoredEditableList()
     }
 }
