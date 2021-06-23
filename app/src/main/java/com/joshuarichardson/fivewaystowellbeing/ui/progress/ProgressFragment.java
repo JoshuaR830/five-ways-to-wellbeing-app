@@ -29,6 +29,7 @@ import com.joshuarichardson.fivewaystowellbeing.TimeHelper;
 import com.joshuarichardson.fivewaystowellbeing.WaysToWellbeing;
 import com.joshuarichardson.fivewaystowellbeing.analytics.LogAnalyticEventHelper;
 import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule;
+import com.joshuarichardson.fivewaystowellbeing.storage.ActivityRecordWrapper;
 import com.joshuarichardson.fivewaystowellbeing.storage.LimitedRawSurveyData;
 import com.joshuarichardson.fivewaystowellbeing.storage.RawSurveyData;
 import com.joshuarichardson.fivewaystowellbeing.storage.SentimentItem;
@@ -360,10 +361,11 @@ public class ProgressFragment extends Fragment {
 
                 WellbeingDatabaseModule.databaseExecutor.execute(() -> {
 
-                    List<ActivityRecord> activityRecords = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleIdNotLive(scheduleId);
+                    List<ActivityRecordWrapper> activityRecords = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleIdNotLive(scheduleId);
 
                     requireActivity().runOnUiThread(() -> {
-                        for (ActivityRecord record : activityRecords) {
+                        for (ActivityRecordWrapper recordWrapper : activityRecords) {
+                            ActivityRecord record = recordWrapper.getRecord();
                             Log.d("Activity record", String.valueOf(record.getActivityRecordId()));
                             processIndividualItem(record.getActivityRecordId(), record.getActivityType(), record.getActivityName(), record.getActivityWayToWellbeing(), false);
                         }

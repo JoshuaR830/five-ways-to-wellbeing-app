@@ -102,7 +102,6 @@
     <string name="button_missing_day">Add missed</string>
     <string name="automated_activity_text">This activity was automatically suggested based on your activity, do you want to add it?</string>
     <string name="update_five_dialog">In the latest update you can track app usage for the apps you choose and have more advanced options for physical activities. Why not head over to settings and configure the automatic activity logging.</string>
-
     <string name="minutes">mins</string>
     <string name="hours">hrs</string>
 
@@ -242,4 +241,9 @@
     <string name="resources_description">A selection of self-help resources.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Schedules -->
+    <string name="schedule_hint_title">Create a schedule</string>
+    <string name="schedule_hint_body">Schedules make it easy to log multiple activities at once, why not set up a new schedule, it\'s easy!</string>
+    <string name="schedule_hint_button">Schedule</string>
 </resources>

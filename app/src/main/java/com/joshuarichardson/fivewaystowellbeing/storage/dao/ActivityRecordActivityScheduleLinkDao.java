@@ -1,5 +1,6 @@
 package com.joshuarichardson.fivewaystowellbeing.storage.dao;
 
+import com.joshuarichardson.fivewaystowellbeing.storage.ActivityRecordWrapper;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecordActivitySchedule;
 
@@ -15,9 +16,12 @@ public interface ActivityRecordActivityScheduleLinkDao {
     @Insert
     long insert(ActivityRecordActivitySchedule activityRecordActivitySchedule);
 
-    @Query("SELECT activity_records.id, activity_records.name, activity_records.duration, activity_records.timestamp, activity_records.type, activity_records.way_to_wellbeing, activity_records.is_hidden, activity_records.inspire_id FROM activity_records INNER JOIN activity_record_activity_schedule_link ON activity_records.id = activity_record_activity_schedule_link.activity_id WHERE activity_record_activity_schedule_link.schedule_id = :scheduleId")
-    Flow<List<ActivityRecord>> getActivitiesByScheduleId(long scheduleId);
+    @Query("SELECT activity_record_activity_schedule_link.id as linkId, activity_records.id as activityRecordId, activity_records.name as activityName, activity_records.duration as activityDuration, activity_records.timestamp as activityTimestamp, activity_records.type as activityType, activity_records.way_to_wellbeing as activityWayToWellbeing, activity_records.is_hidden as isHidden, activity_records.inspire_id as inspireId FROM activity_records INNER JOIN activity_record_activity_schedule_link ON activity_records.id = activity_record_activity_schedule_link.activity_id WHERE activity_record_activity_schedule_link.schedule_id = :scheduleId")
+    Flow<List<ActivityRecordWrapper>> getActivitiesByScheduleId(long scheduleId);
 
-    @Query("SELECT activity_records.id, activity_records.name, activity_records.duration, activity_records.timestamp, activity_records.type, activity_records.way_to_wellbeing, activity_records.is_hidden, activity_records.inspire_id FROM activity_records INNER JOIN activity_record_activity_schedule_link ON activity_records.id = activity_record_activity_schedule_link.activity_id WHERE activity_record_activity_schedule_link.schedule_id = :scheduleId")
-    List<ActivityRecord> getActivitiesByScheduleIdNotLive(long scheduleId);
+    @Query("SELECT activity_record_activity_schedule_link.id as linkId, activity_records.id as activityRecordId, activity_records.name as activityName, activity_records.duration as activityDuration, activity_records.timestamp as activityTimestamp, activity_records.type as activityType, activity_records.way_to_wellbeing as activityWayToWellbeing, activity_records.is_hidden as isHidden, activity_records.inspire_id as inspireId FROM activity_records INNER JOIN activity_record_activity_schedule_link ON activity_records.id = activity_record_activity_schedule_link.activity_id WHERE activity_record_activity_schedule_link.schedule_id = :scheduleId")
+    List<ActivityRecordWrapper> getActivitiesByScheduleIdNotLive(long scheduleId);
+
+    @Query("DELETE FROM activity_record_activity_schedule_link WHERE id = :linkId")
+    void unlink(long linkId);
 }
