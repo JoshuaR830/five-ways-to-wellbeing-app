@@ -15,7 +15,6 @@ import com.joshuarichardson.fivewaystowellbeing.DisplayHelper
 import com.joshuarichardson.fivewaystowellbeing.R
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.ActivityScheduleAdapter.ActivityScheduleViewHolder
-import kotlin.contracts.contract
 
 class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySchedule>, scheduleItemClicked : OnScheduleItemClick) : RecyclerView.Adapter<ActivityScheduleViewHolder>() {
 
@@ -23,7 +22,8 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
     val scheduleItemClicked = scheduleItemClicked;
     var schedules : List<ActivitySchedule> = scheduleList;
     var isEditable: Int = -1;
-    var context: Context = context;
+    var context: Context = context
+    var nextAction : Int = -1
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ActivityScheduleViewHolder {
@@ -42,15 +42,36 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
     }
 
     fun editableList(isEditable : Boolean) {
-        if(isEditable) {
-            this.isEditable = 1
+
+        if(nextAction == -1) {
+            if(this.isEditable == -1) {
+                if(isEditable) {
+                    this.isEditable = 1
+                } else {
+                    this.isEditable = 0
+                }
+            } else {
+                if (this.isEditable == 0) {
+                    this.isEditable = 1
+                } else {
+                    this.isEditable = 0
+                }
+            }
         } else {
-            this.isEditable = 0
+            this.isEditable = nextAction
+            nextAction = -1
         }
+
         notifyDataSetChanged()
     }
+//
+//    fun refactoredEditableList() {
+//        if (nextAction == -1) {
+//            this.refactoredIsEditable
+//        }
+//    }
 
-   inner class ActivityScheduleViewHolder(@NonNull itemView : View) : RecyclerView.ViewHolder(itemView) {
+    inner class ActivityScheduleViewHolder(@NonNull itemView : View) : RecyclerView.ViewHolder(itemView) {
 
         val nameText: TextView
         val scheduleImage: ImageView
@@ -64,6 +85,8 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
             scheduleImage = itemView.findViewById(R.id.schedule_image)
             deleteButton = itemView.findViewById(R.id.delete_image_button)
             editButton = itemView.findViewById(R.id.edit_image_button)
+
+            hide()
         }
 
         fun onBind(selectedSchedule : ActivitySchedule) {
@@ -78,15 +101,30 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
             }
 
             Log.d("IsEditable", isEditable.toString())
+            Log.d("Last action", nextAction.toString())
 
-            if(isEditable == 1) {
+//            if(nextAction == 0) {
+//                this.isEditingItem = true
+//                var px : Float = DisplayHelper.dpToPx(context, -144).toFloat();
+//                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
+//                show()
+//                animation.start()
+//            } else if (nextAction == 1) {
+//                this.isEditingItem = false
+//                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
+//                hide()
+//                animation.start()
+//            }
+            if (isEditable == 1) {
                 this.isEditingItem = true
-                var px : Float = DisplayHelper.dpToPx(context, -142).toFloat();
+                var px : Float = DisplayHelper.dpToPx(context, -144).toFloat();
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
+                show()
                 animation.start()
             } else if (isEditable == 0){
                 this.isEditingItem = false
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
+                hide()
                 animation.start()
             }
 
@@ -108,20 +146,35 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
         }
 
        fun doTheThing() {
-           this.isEditingItem = !this.isEditingItem;
+           this.isEditingItem = !this.isEditingItem
 
            if(this.isEditingItem) {
-              var px : Float = DisplayHelper.dpToPx(context, -142).toFloat();
+               nextAction = 0
+               var px : Float = DisplayHelper.dpToPx(context, -142).toFloat();
                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
-               deleteButton.isClickable = true
-               editButton.isClickable = true
+               show()
                animation.start()
            } else {
+                nextAction = 1
                 val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
-                deleteButton.isClickable = false
-                editButton.isClickable = false
+                hide()
                 animation.start()
            }
+       }
+
+       fun hide() {
+           deleteButton.isEnabled = false
+           deleteButton.visibility = View.GONE
+           editButton.isEnabled = false
+           editButton.visibility = View.GONE
+       }
+
+       fun show() {
+           deleteButton.isEnabled = true
+           deleteButton.visibility = View.VISIBLE
+           editButton.isEnabled = true
+           editButton.visibility = View.VISIBLE
+
        }
     }
 }

@@ -54,6 +54,9 @@ public class ActivityRecord {
     @ColumnInfo(name = ACTIVITY_RECORD_INSPIRE_ID)
     private long inspireId;
 
+    @Ignore
+    public boolean isSelected;
+
     public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId) {
         initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType, activityWayToWellbeing, isHidden, inspireId);
     }

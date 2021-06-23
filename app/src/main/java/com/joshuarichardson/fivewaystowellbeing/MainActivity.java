@@ -123,7 +123,15 @@ public class MainActivity extends AppCompatActivity {
         // Display a welcome screen for first time users of this version
         if(preferences.getInt("app_version", 0) < 7) {
             Intent intent = new Intent(this, IntroActivity.class);
-            preferenceEditor.putInt("app_version", 7);
+            preferenceEditor.putInt("app_version", 8);
+            preferenceEditor.apply();
+            startActivityForResult(intent, ACTIVITY_INTRODUCTION);
+        } else if(preferences.getInt("app_version", 0) < 8) {
+            Intent intent = new Intent(this, IntroActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putInt("zero_indexed_page_number", 3);
+            intent.putExtras(bundle);
+            preferenceEditor.putInt("app_version", 8);
             preferenceEditor.apply();
             startActivityForResult(intent, ACTIVITY_INTRODUCTION);
         } else {
@@ -394,6 +402,9 @@ public class MainActivity extends AppCompatActivity {
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if (requestCode == ACTIVITY_INTRODUCTION) {
+            acceptPermissions();
+        }
         // Only navigate to inspire feed if it exists
 //        if(!preferences.getBoolean("notification_inspire_feed", false)) {
 //            return;

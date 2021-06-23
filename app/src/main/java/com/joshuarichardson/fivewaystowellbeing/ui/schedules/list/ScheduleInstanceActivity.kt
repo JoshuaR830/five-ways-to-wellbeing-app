@@ -1,28 +1,31 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.schedules.list
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.view.*
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.widget.*
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
-import com.joshuarichardson.fivewaystowellbeing.ActivityTypeImageHelper
-import com.joshuarichardson.fivewaystowellbeing.R
-import com.joshuarichardson.fivewaystowellbeing.WaysToWellbeing
-import com.joshuarichardson.fivewaystowellbeing.WellbeingHelper
+import com.joshuarichardson.fivewaystowellbeing.*
 import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule
+import com.joshuarichardson.fivewaystowellbeing.storage.ActivityRecordWrapper
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
-import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecord
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecordActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity
 import com.joshuarichardson.fivewaystowellbeing.ui.insights.WayToWellbeingImageColorizer
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class ScheduleInstanceActivity : AppCompatActivity() {
@@ -31,6 +34,7 @@ class ScheduleInstanceActivity : AppCompatActivity() {
     lateinit var db : WellbeingDatabase
 
     var scheduleId : Long = 0
+    var isEditable : Boolean = false;
 
     companion object {
         const val SELECT_ACTIVITY_REQUEST_CODE : Int = 1;
@@ -56,27 +60,119 @@ class ScheduleInstanceActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.schedule_name).text = name
 
 
-        val observer = Observer<List<ActivityRecord>> { scheduledActivities ->
+        val observer = Observer<List<ActivityRecordWrapper>> { scheduledActivities ->
             layout.removeAllViews()
 
-            for (activity in scheduledActivities) {
-                var view : View = LayoutInflater.from(this).inflate(R.layout.inspire_suggestion_item, null, false)
-                view.findViewById<ImageButton>(R.id.favorite_button).visibility = View.GONE // ToDo - make this able to delete an item from the list
-                view.findViewById<TextView>(R.id.app_name_text_view).text = activity.activityName;
-                view.findViewById<TextView>(R.id.associated_activity_text_view).text = String.format("%s%s", activity.activityType.substring(0, 1), activity.activityType.substring(1).toLowerCase(Locale.getDefault()))
-                view.findViewById<TextView>(R.id.way_to_wellbeing_text_view).text = getString(WellbeingHelper.getWellbeingStringResource(WaysToWellbeing.valueOf(activity.activityWayToWellbeing)))
-                view.findViewById<ImageView>(R.id.list_item_image).setImageResource(ActivityTypeImageHelper.getActivityImage(activity.activityType))
-
-                val frame: FrameLayout = view.findViewById(R.id.icon_image_frame)
-                WayToWellbeingImageColorizer.colorizeFrame(this, frame, WaysToWellbeing.valueOf(activity.activityWayToWellbeing))
-
-                layout.addView(view)
-            }
+            renderActivityList(scheduledActivities, layout)
         }
 
-        var liveData : LiveData<List<ActivityRecord>> = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleId(scheduleId).asLiveData();
+        var liveData : LiveData<List<ActivityRecordWrapper>> = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleId(scheduleId).asLiveData();
         liveData.observe(this, observer)
 
+    }
+
+    fun renderActivityList(scheduledActivities : List<ActivityRecordWrapper>, layout : LinearLayout) {
+        for (activityWrapper in scheduledActivities) {
+            var activity = activityWrapper.getRecord();
+            var view : View = LayoutInflater.from(this).inflate(R.layout.schedule_activity_item, null, false)
+            view.findViewById<TextView>(R.id.app_name_text_view).text = activity.activityName;
+            view.findViewById<TextView>(R.id.associated_activity_text_view).text = String.format("%s%s", activity.activityType.substring(0, 1), activity.activityType.substring(1).toLowerCase(Locale.getDefault()))
+            view.findViewById<TextView>(R.id.way_to_wellbeing_text_view).text = getString(WellbeingHelper.getWellbeingStringResource(WaysToWellbeing.valueOf(activity.activityWayToWellbeing)))
+            view.findViewById<ImageView>(R.id.list_item_image).setImageResource(ActivityTypeImageHelper.getActivityImage(activity.activityType))
+            view.tag = "false"
+
+            val frame: FrameLayout = view.findViewById(R.id.icon_image_frame)
+            WayToWellbeingImageColorizer.colorizeFrame(this, frame, WaysToWellbeing.valueOf(activity.activityWayToWellbeing))
+
+            layout.addView(view)
+
+            val deleteButton : ImageButton = view.findViewById<ImageButton>(R.id.delete_image_button)
+
+            deleteButton.setOnClickListener {
+                WellbeingDatabaseModule.databaseExecutor.execute {
+                    db.activityRecordActivityScheduleLinkDao().unlink(activityWrapper.linkId);
+                }
+            }
+
+            deleteButton.isEnabled = false
+            deleteButton.visibility = View.GONE
+
+            view.setOnLongClickListener {
+                if (view.tag == "false") {
+                    activity.isSelected = true
+                    this.isEditable = true;
+                    view.tag = "true"
+                    var px : Float = DisplayHelper.dpToPx(this, -72).toFloat()
+                    val animation = ObjectAnimator.ofFloat(view.findViewById<CardView>(R.id.schedule_activity_content), View.TRANSLATION_X, px)
+                    animation.start()
+                    deleteButton.isEnabled = true
+                    deleteButton.visibility = View.VISIBLE
+                }
+                true
+            }
+
+            view.setOnClickListener {
+                if (view.tag == "true") {
+                    activity.isSelected = false;
+                    this.isEditable = false;
+                    view.tag = "false"
+                    val animation = ObjectAnimator.ofFloat(view.findViewById<CardView>(R.id.schedule_activity_content), View.TRANSLATION_X, 0F)
+                    animation.start()
+                    deleteButton.isEnabled = false
+                    deleteButton.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        // Inflate the options menu
+        menuInflater.inflate(R.menu.help_menu, menu)
+        menu?.findItem(R.id.action_edit)?.isVisible = true;
+
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.getItemId() == R.id.action_edit) {
+            val layout : LinearLayout = findViewById<LinearLayout>(R.id.suggestion_item_container)
+
+            for(i in 0 until layout.childCount) {
+                val view = layout.getChildAt(i)
+                if (!this.isEditable) {
+
+                    view.tag = "true"
+
+                    var px : Float = DisplayHelper.dpToPx(this, -72).toFloat()
+                    val animation = ObjectAnimator.ofFloat(view.findViewById<CardView>(R.id.schedule_activity_content), View.TRANSLATION_X, px)
+                    animation.start()
+
+                    val deleteButton : ImageButton = view.findViewById<ImageButton>(R.id.delete_image_button)
+
+                    deleteButton.isEnabled = true
+                    deleteButton.visibility = View.VISIBLE
+                } else {
+                    view.tag = "false"
+
+                    val animation = ObjectAnimator.ofFloat(view.findViewById<CardView>(R.id.schedule_activity_content), View.TRANSLATION_X, 0F)
+                    animation.start()
+
+                    val deleteButton : ImageButton = view.findViewById<ImageButton>(R.id.delete_image_button)
+
+                    deleteButton.isEnabled = true
+                    deleteButton.visibility = View.VISIBLE
+                }
+            }
+
+            Log.d("Pressed it", "edit")
+        }
+
+        // Invert it after
+        this.isEditable = !this.isEditable;
+
+        return super.onOptionsItemSelected(item)
     }
 
     fun onButtonClick(view : View) {

@@ -5,6 +5,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -21,6 +23,8 @@ import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseMo
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity
+import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity
+import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroParentFragment
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.ActivityScheduleAdapter.ActivityScheduleViewHolder
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.create.CreateActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.list.ScheduleInstanceActivity
@@ -57,6 +61,12 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         recycler.layoutManager = LinearLayoutManager(requireContext())
 
         val scheduleResponseObserver = Observer<List<ActivitySchedule>> { schedules ->
+            if (schedules.isEmpty()) {
+                activity?.findViewById<CardView>(R.id.schedule_hint)?.visibility = View.VISIBLE
+            } else {
+                activity?.findViewById<CardView>(R.id.schedule_hint)?.visibility = View.GONE
+            }
+
             scheduleAdapter = ActivityScheduleAdapter(requireContext(), schedules, this)
             recycler.adapter = scheduleAdapter
         }
@@ -65,8 +75,14 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         data.observe(requireActivity(), scheduleResponseObserver)
 
         val addScheduleButton : FloatingActionButton = view.findViewById(R.id.fab_schedule)
+        val hintButton : Button = view.findViewById(R.id.schedule_hint_button)
 
         addScheduleButton.setOnClickListener {
+            val activityIntent = Intent(requireActivity(), CreateActivitySchedule::class.java)
+            startActivityForResult(activityIntent, CREATE_SURVEY_REQUEST_CODE)
+        }
+
+        hintButton.setOnClickListener {
             val activityIntent = Intent(requireActivity(), CreateActivitySchedule::class.java)
             startActivityForResult(activityIntent, CREATE_SURVEY_REQUEST_CODE)
         }
@@ -120,6 +136,17 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
     override fun itemClicked(schedule: ActivitySchedule) {
 
         if (requireActivity()::class.qualifiedName == MainActivity::class.qualifiedName) {
+            val intent = Intent(requireActivity(), ScheduleInstanceActivity::class.java)
+
+            val bundle = Bundle()
+            bundle.putLong("schedule_id", schedule.id)
+            bundle.putString("schedule_name", schedule.name)
+            intent.putExtras(bundle)
+
+            startActivityForResult(intent, ADD_ACTIVITIES_REQUEST_CODE)
+        }
+
+        if (requireActivity()::class.qualifiedName == IntroActivity::class.qualifiedName) {
             val intent = Intent(requireActivity(), ScheduleInstanceActivity::class.java)
 
             val bundle = Bundle()
@@ -190,6 +217,9 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
     // Reference: https://stackoverflow.com/a/47531110/13496270
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
+
+        if(menu.findItem(R.id.action_edit) == null) return
+
         menu.findItem(R.id.action_edit).isVisible = true
     }
 
@@ -201,5 +231,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
 
         // This updates the recycler view and filters it by the search term for better navigation
         this.scheduleAdapter?.editableList(this.isEditable)
+//        this.scheduleAdapter?.refactoredEditableList()
     }
 }

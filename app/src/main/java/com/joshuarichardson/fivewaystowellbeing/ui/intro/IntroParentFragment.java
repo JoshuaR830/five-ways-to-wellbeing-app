@@ -34,6 +34,8 @@ public class IntroParentFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         View view = inflater.inflate(R.layout.activity_intro_parent, container, false);
 
         IntroPagerAdapter adapter = new IntroPagerAdapter(this);
@@ -50,7 +52,11 @@ public class IntroParentFragment extends Fragment {
             image.setOnClickListener((v) -> onDotClick(v, dotNumber));
         }
 
-        // ToDo - when scrolling backwards and forwards it does the wrong thing - NOOO - arrows don't work
+        if(getActivity().getIntent().getExtras() != null) {
+            int pageNumber = getActivity().getIntent().getExtras().getInt("zero_indexed_page_number", 0);
+            viewPager.setCurrentItem(pageNumber);
+        }
+
         viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
