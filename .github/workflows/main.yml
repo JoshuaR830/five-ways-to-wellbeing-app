@@ -20,6 +20,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: checkout
       - uses: actions/checkout@v2
 
       - name: Run unit tests
@@ -29,9 +30,7 @@ jobs:
       # Help from https://dev.to/ychescale9/running-android-emulators-on-ci-from-bitrise-io-to-github-actions-3j76
       - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
-        with: 
+        with:
           api-level: 28
-          profile: Nexus 6
-          disable-animations: true  
           # Run the tests in src/androidTests/
           script: ./gradlew connectedCheck
