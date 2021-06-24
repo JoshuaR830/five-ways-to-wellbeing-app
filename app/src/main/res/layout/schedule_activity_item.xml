@@ -77,19 +77,6 @@
                     tools:srcCompat="@tools:sample/avatars" />
             </FrameLayout>
 
-            <!--            <ImageButton-->
-            <!--                android:id="@+id/favorite_button"-->
-            <!--                style="@style/Widget.MaterialComponents.Button.TextButton"-->
-            <!--                android:layout_width="24dp"-->
-            <!--                android:layout_height="0dp"-->
-            <!--                android:layout_marginEnd="8dp"-->
-            <!--                android:onClick="onLearnMoreButtonClicked"-->
-            <!--                android:src="@drawable/favorite_button_unselected"-->
-            <!--                android:tint="@color/colorPrimary"-->
-            <!--                app:layout_constraintBottom_toBottomOf="@+id/app_list_layout"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="@+id/app_list_layout" />-->
-
             <LinearLayout
                 android:id="@+id/app_list_layout"
                 android:layout_width="0dp"
@@ -132,7 +119,6 @@
                     android:textColor="?android:attr/colorActivatedHighlight"
                     android:visibility="gone" />
             </LinearLayout>
-
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

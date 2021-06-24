@@ -3,13 +3,11 @@ package com.joshuarichardson.fivewaystowellbeing.ui.schedules
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Button
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,7 +22,6 @@ import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.activities.edit.ViewActivitiesActivity
 import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroActivity
-import com.joshuarichardson.fivewaystowellbeing.ui.intro.IntroParentFragment
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.ActivityScheduleAdapter.ActivityScheduleViewHolder
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.create.CreateActivitySchedule
 import com.joshuarichardson.fivewaystowellbeing.ui.schedules.list.ScheduleInstanceActivity
@@ -36,19 +33,11 @@ import javax.inject.Inject
 class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
     @Inject lateinit var db : WellbeingDatabase
 
-    val schedulerResponseItems : MutableLiveData<List<ActivitySchedule>> by lazy {
-        MutableLiveData<List<ActivitySchedule>>()
-    }
-
     var scheduleAdapter : ActivityScheduleAdapter? = null;
 
     companion object {
         const val CREATE_SURVEY_REQUEST_CODE : Int = 1
         const val ADD_ACTIVITIES_REQUEST_CODE : Int = 2
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -88,36 +77,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
 
         // Reference https://stackoverflow.com/a/47531110/13496270
         setHasOptionsMenu(true)
-
-//        var touchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.START) {
-//            override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-//                val scheduleViewHolder: ActivityScheduleViewHolder = viewHolder as ActivityScheduleViewHolder
-//                scheduleViewHolder.doTheThing();
-//                return true
-//            }
-//
-//            override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-//                var position : Int = viewHolder.adapterPosition
-//                var dragFlag : Int = ItemTouchHelper.START
-//                var swipeFlags : Int = 0
-//
-//                return ItemTouchHelper.Callback.makeMovementFlags(dragFlag, swipeFlags)
-//            }
-//
-//            override fun getMoveThreshold(viewHolder: RecyclerView.ViewHolder): Float {
-//                return super.getMoveThreshold(viewHolder)
-//            }
-//
-//            override fun getSwipeDirs(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-//                return 0
-//            }
-//
-//            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-//            }
-//        }
-//
-//        val itemTouchHelper = ItemTouchHelper(touchHelperCallback)
-//        itemTouchHelper.attachToRecyclerView(recycler)
 
         return view;
     }
@@ -169,12 +128,10 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
     }
 
     override fun itemLongClicked(schedule: ActivitySchedule, viewHolder: ActivityScheduleViewHolder) {
-        Log.d("Long press", "Yes")
-        viewHolder.doTheThing()
+        viewHolder.animateSchedule()
     }
 
     override fun deleteSchedule(scheduleId: Long) {
-
         MaterialAlertDialogBuilder(requireActivity())
             .setTitle(R.string.title_delete_schedule)
             .setMessage(R.string.body_delete_schedule)
@@ -191,7 +148,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
     }
 
     override fun renameSchedule(scheduleId: Long, scheduleName : String) {
-
         val activityIntent = Intent(requireActivity(), CreateActivitySchedule::class.java)
         val bundle = Bundle()
         bundle.putLong("schedule_id", scheduleId)
@@ -199,18 +155,6 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         activityIntent.putExtras(bundle)
 
         startActivityForResult(activityIntent, CREATE_SURVEY_REQUEST_CODE)
-    }
-
-//    override fun onPause() {
-//        super.onPause()
-//
-//        if(scheduleResponseItems != null) {
-//            scheduleResponseItems.removeObserver(scheduleObserver)
-//        }
-//    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     // Reference: https://stackoverflow.com/a/47531110/13496270
@@ -222,10 +166,8 @@ class ActivitySchedulesFragment : Fragment(), OnScheduleItemClick {
         menu.findItem(R.id.action_edit).isVisible = true
     }
 
-
     fun makeSchedulesEditable() {
         // This updates the recycler view and filters it by the search term for better navigation
         this.scheduleAdapter?.editableList()
-//        this.scheduleAdapter?.refactoredEditableList()
     }
 }

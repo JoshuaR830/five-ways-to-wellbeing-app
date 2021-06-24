@@ -35,7 +35,6 @@ public class IntroParentFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         View view = inflater.inflate(R.layout.activity_intro_parent, container, false);
 
         IntroPagerAdapter adapter = new IntroPagerAdapter(this);

@@ -14,13 +14,10 @@ public class ActivitySchedulePagerAdapter extends FragmentStateAdapter {
     @NonNull
     @Override
     public Fragment createFragment(int position) {
-        Fragment fragment;
         if(position == 0) {
-            fragment = new ActivityHistoryFragment();
-            return fragment;
+            return new ActivityHistoryFragment();
         } else if(position == 1) {
-            fragment = new ActivitySchedulesFragment();
-            return fragment;
+            return new ActivitySchedulesFragment();
         }
 
         return null;

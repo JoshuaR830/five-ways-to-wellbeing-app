@@ -46,11 +46,11 @@ class CreateActivitySchedule : AppCompatActivity() {
 
         var hasError = false
 
-        if (name.length == 0) {
-            nameContainer.setError(getString(R.string.error_no_name_entered))
+        if (name.isEmpty()) {
+            nameContainer.error = getString(R.string.error_no_name_entered)
             hasError = true
         } else {
-            nameContainer.setError(null)
+            nameContainer.error = null
         }
 
         if(hasError) return
@@ -67,8 +67,8 @@ class CreateActivitySchedule : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
             return true;
         }
 

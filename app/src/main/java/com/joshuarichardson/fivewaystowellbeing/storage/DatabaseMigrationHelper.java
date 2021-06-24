@@ -257,7 +257,7 @@ public class DatabaseMigrationHelper {
                 ");"
             );
 
-            database.execSQL("CREATE TABLE activity_schedules (" +
+            database.execSQL("CREATE TABLE activity_record_activity_schedule_link (" +
                 "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 "activity_id INTEGER NOT NULL, " +
                 "schedule_id INTEGER NOT NULL, " +
