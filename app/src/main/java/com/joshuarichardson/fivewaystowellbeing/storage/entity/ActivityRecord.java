@@ -65,10 +65,6 @@ public class ActivityRecord {
     public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, ActivityType activityType, WaysToWellbeing activityWayToWellbeing, boolean isHidden, long inspireId) {
         initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType.toString(), activityWayToWellbeing.toString(), isHidden, inspireId);
     }
-//
-//    public ActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId, long scheduleId) {
-//        initialiseActivityRecord(activityName, activityDuration, activityTimestamp, activityType, activityWayToWellbeing, isHidden, inspireId, scheduleId);
-//    }
 
     private void initialiseActivityRecord(String activityName, long activityDuration, long activityTimestamp, String activityType, String activityWayToWellbeing, boolean isHidden, long inspireId) {
         this.setActivityName(activityName);

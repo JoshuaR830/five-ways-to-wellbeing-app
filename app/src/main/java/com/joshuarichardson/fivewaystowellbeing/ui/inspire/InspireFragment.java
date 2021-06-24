@@ -9,7 +9,6 @@ import dagger.hilt.android.AndroidEntryPoint;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -128,8 +127,6 @@ public class InspireFragment extends Fragment implements InspireAdapter.InspireC
 
     @Override
     public void onFavouriteButtonClicked(View v, InspireRecord inspireRecord) {
-
-        Log.d("Is favourite", String.valueOf(inspireRecord.isFavourite()));
 
         if (!inspireRecord.isFavourite()) {
             WellbeingDatabaseModule.databaseExecutor.execute(() -> {

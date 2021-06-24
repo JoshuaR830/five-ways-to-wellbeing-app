@@ -4,7 +4,6 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuItem
@@ -25,7 +24,6 @@ import com.joshuarichardson.fivewaystowellbeing.ui.insights.WayToWellbeingImageC
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 import javax.inject.Inject
-
 
 @AndroidEntryPoint
 class ScheduleInstanceActivity : AppCompatActivity() {
@@ -61,7 +59,6 @@ class ScheduleInstanceActivity : AppCompatActivity() {
         }
 
         findViewById<TextView>(R.id.schedule_name).text = name
-
 
         val observer = Observer<List<ActivityRecordWrapper>> { scheduledActivities ->
             layout.removeAllViews()
@@ -129,7 +126,6 @@ class ScheduleInstanceActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
         // Inflate the options menu
         menuInflater.inflate(R.menu.help_menu, menu)
         menu?.findItem(R.id.action_edit)?.isVisible = true;
@@ -169,8 +165,6 @@ class ScheduleInstanceActivity : AppCompatActivity() {
                 }
             }
 
-            Log.d("Pressed it", "edit")
-
             // Invert it after
             this.isEditable = !this.isEditable;
         }
@@ -204,8 +198,6 @@ class ScheduleInstanceActivity : AppCompatActivity() {
             WellbeingDatabaseModule.databaseExecutor.execute {
                 db.activityRecordActivityScheduleLinkDao().insert(ActivityRecordActivitySchedule(activityId, scheduleId))
             }
-
-
         }
     }
 }

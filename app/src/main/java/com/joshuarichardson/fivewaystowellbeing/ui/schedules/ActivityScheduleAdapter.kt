@@ -2,7 +2,6 @@ package com.joshuarichardson.fivewaystowellbeing.ui.schedules
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,25 +54,18 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
 
     inner class ActivityScheduleViewHolder(@NonNull itemView : View) : RecyclerView.ViewHolder(itemView) {
 
-        val nameText: TextView
-        val scheduleImage: ImageView
-        var isEditingItem: Boolean = false
-        val deleteButton: ImageButton
-        val editButton: ImageButton
+        private var isEditingItem: Boolean = false
+        private val nameText: TextView = itemView.findViewById(R.id.schedule_name)
+        private val scheduleImage: ImageView = itemView.findViewById(R.id.schedule_image)
+        private val deleteButton: ImageButton = itemView.findViewById(R.id.delete_image_button)
+        private val editButton: ImageButton = itemView.findViewById(R.id.edit_image_button)
 
 
         init {
-            nameText =  itemView.findViewById(R.id.schedule_name);
-            scheduleImage = itemView.findViewById(R.id.schedule_image)
-            deleteButton = itemView.findViewById(R.id.delete_image_button)
-            editButton = itemView.findViewById(R.id.edit_image_button)
-
             hide()
         }
 
         fun onBind(selectedSchedule : ActivitySchedule) {
-            selectedSchedule.id
-
             deleteButton.setOnClickListener {
                 scheduleItemClicked.deleteSchedule(selectedSchedule.id)
             }
@@ -82,21 +74,6 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
                 scheduleItemClicked.renameSchedule(selectedSchedule.id, selectedSchedule.name)
             }
 
-            Log.d("IsEditable", isEditable.toString())
-            Log.d("Last action", nextAction.toString())
-
-//            if(nextAction == 0) {
-//                this.isEditingItem = true
-//                var px : Float = DisplayHelper.dpToPx(context, -144).toFloat();
-//                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, px)
-//                show()
-//                animation.start()
-//            } else if (nextAction == 1) {
-//                this.isEditingItem = false
-//                val animation = ObjectAnimator.ofFloat(itemView.findViewById<View>(R.id.main_content), View.TRANSLATION_X, 0f)
-//                hide()
-//                animation.start()
-//            }
             if (isEditable) {
                 this.isEditingItem = true
                 var px : Float = DisplayHelper.dpToPx(context, -144).toFloat();
@@ -117,7 +94,7 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
                 if (!this.isEditingItem) {
                     scheduleItemClicked.itemClicked(selectedSchedule)
                 } else {
-                    doTheThing()
+                    animateSchedule()
                 }
             }
 
@@ -127,7 +104,7 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
             }
         }
 
-       fun doTheThing() {
+       fun animateSchedule() {
            this.isEditingItem = !this.isEditingItem
 
            if(this.isEditingItem) {
@@ -144,19 +121,18 @@ class ActivityScheduleAdapter(context: Context, scheduleList: List<ActivitySched
            }
        }
 
-       fun hide() {
+       private fun hide() {
            deleteButton.isEnabled = false
            deleteButton.visibility = View.GONE
            editButton.isEnabled = false
            editButton.visibility = View.GONE
        }
 
-       fun show() {
+       private fun show() {
            deleteButton.isEnabled = true
            deleteButton.visibility = View.VISIBLE
            editButton.isEnabled = true
            editButton.visibility = View.VISIBLE
-
        }
     }
 }

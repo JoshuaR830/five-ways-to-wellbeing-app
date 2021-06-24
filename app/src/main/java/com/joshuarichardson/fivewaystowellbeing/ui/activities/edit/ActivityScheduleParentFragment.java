@@ -1,7 +1,6 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.activities.edit;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +68,6 @@ public class ActivityScheduleParentFragment extends Fragment {
     public void makeSchedulesEditable() {
         TabLayout tabLayout = requireActivity().findViewById(R.id.activity_schedule_tabs);
 
-        Log.d("Make editable", String.valueOf(tabLayout.getSelectedTabPosition()));
         if (tabLayout.getSelectedTabPosition() == 1) {
             // Reference https://stackoverflow.com/a/61178226/13496270
             Fragment activeFragment = getChildFragmentManager().findFragmentByTag("f1");

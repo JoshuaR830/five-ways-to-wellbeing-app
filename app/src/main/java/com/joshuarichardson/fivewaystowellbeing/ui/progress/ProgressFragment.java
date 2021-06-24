@@ -6,7 +6,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -366,7 +365,6 @@ public class ProgressFragment extends Fragment {
                     requireActivity().runOnUiThread(() -> {
                         for (ActivityRecordWrapper recordWrapper : activityRecords) {
                             ActivityRecord record = recordWrapper.getRecord();
-                            Log.d("Activity record", String.valueOf(record.getActivityRecordId()));
                             processIndividualItem(record.getActivityRecordId(), record.getActivityType(), record.getActivityName(), record.getActivityWayToWellbeing(), false);
                         }
                     });

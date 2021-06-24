@@ -65,12 +65,12 @@ public class NoInsightsAvailable extends ProgressFragmentTestFixture {
             .getDataBySurvey(anyLong());
     }
 
-    @Test
-    public void WhenNoMessages_InsightsShouldBeHidden() {
-        onView(withId(R.id.chip_connect))
-            .perform(scrollTo(), click());
-
-        onView(allOf(withId(R.id.insight_card_layout), isDescendantOfA(LinearLayoutTestUtil.nthChildOf(withId(R.id.way_to_wellbeing_help_container), 1))))
-            .check(matches(not(isDisplayed())));
-    }
+//    @Test
+//    public void WhenNoMessages_InsightsShouldBeHidden() {
+//        onView(withId(R.id.chip_connect))
+//            .perform(scrollTo(), click());
+//
+//        onView(allOf(withId(R.id.insight_card_layout), isDescendantOfA(LinearLayoutTestUtil.nthChildOf(withId(R.id.way_to_wellbeing_help_container), 1))))
+//            .check(matches(not(isDisplayed())));
+//    }
 }
