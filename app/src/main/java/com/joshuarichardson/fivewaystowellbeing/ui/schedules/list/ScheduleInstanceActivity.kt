@@ -190,14 +190,39 @@ class ScheduleInstanceActivity : AppCompatActivity() {
             if(data == null)
                 return
 
-            if (!data.hasExtra("activity_id"))
-                return
+            var hasScheduleId = false
+            var hasActivityId = false
 
-            var activityId : Long = data.getLongExtra("activity_id", 0)
-
-            WellbeingDatabaseModule.databaseExecutor.execute {
-                db.activityRecordActivityScheduleLinkDao().insert(ActivityRecordActivitySchedule(activityId, scheduleId))
+            if (data.hasExtra("schedule_id")) {
+                hasScheduleId = true
             }
+
+            if (data.hasExtra("activity_id")) {
+                hasActivityId = true
+            }
+
+            if (hasScheduleId) {
+
+                if(data.extras == null) return
+
+                var selectedScheduleId = data.extras!!.getLong("schedule_id", 0)
+
+                WellbeingDatabaseModule.databaseExecutor.execute {
+                    val activityRecords : List<ActivityRecordWrapper> = db.activityRecordActivityScheduleLinkDao().getActivitiesByScheduleIdNotLive(selectedScheduleId)
+                    for (recordWrapper in activityRecords) {
+                        var record = recordWrapper.record
+                        db.activityRecordActivityScheduleLinkDao().insert(ActivityRecordActivitySchedule(record.activityRecordId, scheduleId))
+                    }
+                }
+
+            } else if (hasActivityId) {
+                var activityId : Long = data.getLongExtra("activity_id", 0)
+
+                WellbeingDatabaseModule.databaseExecutor.execute {
+                    db.activityRecordActivityScheduleLinkDao().insert(ActivityRecordActivitySchedule(activityId, scheduleId))
+                }
+            }
+
         }
     }
 }
