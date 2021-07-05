@@ -267,4 +267,25 @@ public class DatabaseMigrationHelper {
             );
         }
     };
+
+    public static final Migration MIGRATION_14_15 = new Migration(14, 15) {
+        @Override
+        public void migrate(@NonNull SupportSQLiteDatabase database) {
+            database.execSQL("CREATE TABLE activity_schedules (" +
+                "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "name TEXT NOT NULL, " +
+                "image TEXT NOT NULL " +
+                ");"
+            );
+
+            database.execSQL("CREATE TABLE activity_record_activity_schedule_link (" +
+                "id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "activity_id INTEGER NOT NULL, " +
+                "schedule_id INTEGER NOT NULL, " +
+                "FOREIGN KEY(activity_id) REFERENCES activity_records(id) ON DELETE CASCADE, " +
+                "FOREIGN KEY(schedule_id) REFERENCES activity_schedules(id) ON DELETE CASCADE" +
+                ");"
+            );
+        }
+    };
 }

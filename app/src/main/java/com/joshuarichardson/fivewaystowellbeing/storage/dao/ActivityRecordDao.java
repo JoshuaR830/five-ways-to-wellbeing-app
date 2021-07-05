@@ -107,7 +107,6 @@ public interface ActivityRecordDao {
     @Query("UPDATE activity_records SET is_hidden = 1 WHERE inspire_id = :inspireId")
     void hideByInspireId(long inspireId);
 
-
     @Query("INSERT INTO activity_records (id, name, type, timestamp, duration, way_to_wellbeing, is_hidden, inspire_id) VALUES (:activityRecordId, :activityName, :activityType, :activityTimestamp, :activityDuration, :activityWayToWellbeing, :isHidden, :inspireId) ON CONFLICT DO NOTHING")
     void insertData(long activityRecordId, String activityName, String activityType, long activityTimestamp, long activityDuration, String activityWayToWellbeing, boolean isHidden, long inspireId);
 

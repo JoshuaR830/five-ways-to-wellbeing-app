@@ -88,6 +88,10 @@ public class ActivityRecord {
         this.setScheduleId(scheduleId);
     }
 
+    public void setScheduleId(long scheduleId) {
+        this.scheduleId = scheduleId;
+    }
+
     private void setIsHidden(boolean isHidden) {
         this.isHidden = isHidden;
     }
@@ -96,8 +100,8 @@ public class ActivityRecord {
         this.activityWayToWellbeing = wayToWellbeing;
     }
 
-    public void setActivityRecordId(@NonNull long recordId) {
-        this.activityRecordId = recordId;
+    public void setActivityRecordId(@NonNull long activityRecordId) {
+        this.activityRecordId = activityRecordId;
     }
 
     public void setActivityName(String activityName) {
@@ -118,10 +122,6 @@ public class ActivityRecord {
 
     private void setInspireId(long inspireId) {
         this.inspireId = inspireId;
-    }
-
-    private void setScheduleId(long scheduleId) {
-        this.scheduleId = scheduleId;
     }
 
     @NonNull
