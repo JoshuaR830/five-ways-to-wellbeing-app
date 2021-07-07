@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,14 +61,11 @@ public class ExportData extends Fragment {
     }
 
     private void exportClick(View v) {
-
-//        Intent fileChooser = new Intent(Intent.ACTION_OPEN_DOCUMENT_TREE);
         Intent fileChooser = new Intent(Intent.ACTION_CREATE_DOCUMENT);
         fileChooser.addCategory(Intent.CATEGORY_OPENABLE);
         fileChooser.setType("file/txt");
         fileChooser.putExtra(Intent.EXTRA_TITLE, "five_ways_to_wellbeing_data.txt");
 
-//        startActivityForResult(Intent.createChooser(fileChooser, "Choose folder"), FILE_CHOOSER_REQUEST_CODE);
         startActivityForResult(fileChooser, FILE_CHOOSER_REQUEST_CODE);
     }
 

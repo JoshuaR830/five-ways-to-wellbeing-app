@@ -1,12 +1,9 @@
 package com.joshuarichardson.fivewaystowellbeing.ui.settings.data;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +14,9 @@ import android.widget.LinearLayout;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.gson.Gson;
 import com.joshuarichardson.fivewaystowellbeing.R;
-import com.joshuarichardson.fivewaystowellbeing.TimeHelper;
 import com.joshuarichardson.fivewaystowellbeing.hilt.modules.WellbeingDatabaseModule;
-import com.joshuarichardson.fivewaystowellbeing.storage.ActivityRecordWrapper;
 import com.joshuarichardson.fivewaystowellbeing.storage.DataExport;
 import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingDatabase;
-import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphItem;
-import com.joshuarichardson.fivewaystowellbeing.storage.WellbeingGraphValueHelper;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivityRecordActivitySchedule;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.ActivitySchedule;
@@ -34,7 +27,6 @@ import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingRecord;
 import com.joshuarichardson.fivewaystowellbeing.storage.entity.WellbeingResult;
 
 import java.io.BufferedReader;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -95,7 +87,7 @@ public class ImportData extends Fragment {
             return;
         }
 
-        if(data == null) {
+        if (data == null) {
             return;
         }
 
@@ -121,7 +113,7 @@ public class ImportData extends Fragment {
         List<ActivityRecordActivitySchedule> activityScheduleLinks = importedData.getActivityScheduleLinks();
         List<ActivitySchedule> activitySchedules = importedData.getActivitySchedules();
 
-        if(requestCode == FILE_IMPORT_REQUEST_CODE) {
+        if (requestCode == FILE_IMPORT_REQUEST_CODE) {
 
             ConstraintLayout statusLayout = requireActivity().findViewById(R.id.sync_status);
             Button button = requireActivity().findViewById(R.id.import_button);
@@ -258,21 +250,17 @@ public class ImportData extends Fragment {
 
     private void importSurveyResponses(List<SurveyResponse> surveyResponses) {
         for (SurveyResponse response : surveyResponses) {
-            Log.d("Response Id", String.valueOf(response.getSurveyResponseId()));
-            Log.d("Response Time", String.valueOf(response.getSurveyResponseTimestamp()));
 
             // Because conflict avoids - make sure that it doesn't exist if I am trying to insert it - launching the app creates will have created all of them
             db.surveyResponseDao().deleteSurveyResponseById(response.getSurveyResponseId());
 
-            // ToDo - could make it an update instead
-
-            Log.d("Survey id", String.valueOf(db.surveyResponseDao().insertData(
+            db.surveyResponseDao().insertData(
                 response.getSurveyResponseId(),
                 response.getSurveyResponseTimestamp(),
                 response.getSurveyResponseWayToWellbeing(),
                 response.getTitle(),
                 response.getDescription()
-            )));
+            );
         }
     }
 
