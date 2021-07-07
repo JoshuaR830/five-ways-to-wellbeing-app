@@ -53,11 +53,11 @@ public interface ActivityRecordDao {
     LiveData<List<ActivityRecord>> getAllActivities();
 
     /**
-     * Get all of the activities ever created that have not been hidden/deleted
+     * Get all of the activities ever created
      *
      * @return A static list of all activities
      */
-    @Query("SELECT * FROM activity_records WHERE is_hidden = 0")
+    @Query("SELECT * FROM activity_records")
     List<ActivityRecord> getAllActivitiesNotLive();
 
     /**
@@ -98,8 +98,9 @@ public interface ActivityRecordDao {
     @Query("UPDATE activity_records SET is_hidden = 1 WHERE inspire_id = :inspireId")
     void hideByInspireId(long inspireId);
 
-
     @Query("INSERT INTO activity_records (id, name, type, timestamp, duration, way_to_wellbeing, is_hidden, inspire_id) VALUES (:activityRecordId, :activityName, :activityType, :activityTimestamp, :activityDuration, :activityWayToWellbeing, :isHidden, :inspireId) ON CONFLICT DO NOTHING")
     void insertData(long activityRecordId, String activityName, String activityType, long activityTimestamp, long activityDuration, String activityWayToWellbeing, boolean isHidden, long inspireId);
 
+    @Query("DELETE FROM activity_records WHERE id = :activityRecordId")
+    void deleteByActivityRecordId(long activityRecordId);
 }

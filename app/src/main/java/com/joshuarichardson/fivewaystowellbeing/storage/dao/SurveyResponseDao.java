@@ -93,6 +93,8 @@ public interface SurveyResponseDao {
     LiveData<List<SurveyResponse>> getAllSurveyResponses();
 
     @Query("INSERT INTO survey_response (id, timestamp, way_to_wellbeing, title, description) VALUES (:surveyResponseId, :surveyResponseTimestamp, :surveyResponseWayToWellbeing, :title, :description) ON CONFLICT DO NOTHING")
-    void insertData(long surveyResponseId, long surveyResponseTimestamp, String surveyResponseWayToWellbeing, String title, String description);
+    long insertData(long surveyResponseId, long surveyResponseTimestamp, String surveyResponseWayToWellbeing, String title, String description);
 
+    @Query("DELETE FROM survey_response WHERE id = :surveyResponseId")
+    void deleteSurveyResponseById(long surveyResponseId);
 }

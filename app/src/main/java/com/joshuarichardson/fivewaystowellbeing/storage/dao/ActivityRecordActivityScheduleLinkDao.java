@@ -24,4 +24,10 @@ public interface ActivityRecordActivityScheduleLinkDao {
 
     @Query("DELETE FROM activity_record_activity_schedule_link WHERE id = :linkId")
     void unlink(long linkId);
+
+    @Query("INSERT INTO activity_record_activity_schedule_link (id, activity_id, schedule_id) VALUES (:id, :activityId, :scheduleId) ON CONFLICT DO NOTHING")
+    void insertData(long id, long activityId, long scheduleId);
+
+    @Query("SELECT * FROM activity_record_activity_schedule_link")
+    List<ActivityRecordActivitySchedule> getAllActivityScheduleLinks();
 }

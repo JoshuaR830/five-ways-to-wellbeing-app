@@ -22,4 +22,7 @@ interface ActivityScheduleDao {
 
     @Query("DELETE FROM activity_schedules WHERE id = :scheduleId")
     fun deleteById(scheduleId: Long)
+
+    @Query("INSERT INTO activity_schedules (id, name, image) VALUES (:id, :name, :image) ON CONFLICT DO NOTHING")
+    fun insertData(id: Long, name: String, image: String)
 }

@@ -55,4 +55,15 @@ public interface WellbeingResultsDao {
      */
     @Query("SELECT * FROM wellbeing_result WHERE timestamp BETWEEN :startTime AND :endTime ORDER BY timestamp ASC")
     List<WellbeingResult> getResultsByTimestampRange(long startTime, long endTime);
+
+    /**
+     * Get all the wellbeing results ever recorded
+     *
+     * @return A static list of all wellbeing results
+     */
+    @Query("SELECT * FROM wellbeing_result")
+    List<WellbeingResult> getAllResults();
+
+    @Query("INSERT INTO wellbeing_result (id, connect, be_active, keep_learning, take_notice, give, timestamp) VALUES (:id, :connectValue, :beActiveValue, :keepLearningValue, :takeNoticeValue, :giveValue, :timestamp) ON CONFLICT DO NOTHING")
+    void insertData(long id, int connectValue, int beActiveValue, int keepLearningValue, int takeNoticeValue, int giveValue, long timestamp);
 }

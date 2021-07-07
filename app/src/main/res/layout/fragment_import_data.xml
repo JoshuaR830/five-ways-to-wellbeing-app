@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.settings.data.ImportData">
+
+    <Button
+        android:id="@+id/import_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/import_data"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/import_done_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/button_done"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sync_status"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <FrameLayout
+            android:id="@+id/activitiesFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/progress_circle_filled"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/activitiesTextImport"
+            app:layout_constraintEnd_toEndOf="@+id/statusTextView"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintTop_toTopOf="@+id/activitiesTextImport">
+
+            <ImageView
+                android:id="@+id/activitiesImportImageSync"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_sync" />
+
+            <ImageView
+                android:id="@+id/activitiesImportImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_tick"
+                android:visibility="gone" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/surveyFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/progress_circle_filled"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/surveysTextImport"
+            app:layout_constraintEnd_toEndOf="@+id/statusTextView"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintTop_toTopOf="@+id/surveysTextImport">
+
+            <ImageView
+                android:id="@+id/surveyImportImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_tick"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/surveyImportImageSync"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_sync" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/historyFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/progress_circle_filled"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/historyTextImport"
+            app:layout_constraintEnd_toEndOf="@+id/statusTextView"
+            app:layout_constraintHorizontal_chainStyle="spread"
+            app:layout_constraintTop_toTopOf="@+id/historyTextImport">
+
+            <ImageView
+                android:id="@+id/historyImportImageSync"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_sync" />
+
+            <ImageView
+                android:id="@+id/historyImportImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_tick"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <FrameLayout
+            android:id="@+id/scheduleFrameLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/progress_circle_filled"
+            android:padding="2dp"
+            app:layout_constraintBottom_toBottomOf="@+id/schedulesTextImport"
+            app:layout_constraintEnd_toEndOf="@+id/statusTextView"
+            app:layout_constraintTop_toTopOf="@+id/schedulesTextImport">
+
+            <ImageView
+                android:id="@+id/scheduleImportImageSync"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_sync" />
+
+            <ImageView
+                android:id="@+id/scheduleImportImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/icon_tick"
+                android:visibility="gone" />
+        </FrameLayout>
+
+
+        <TextView
+            android:id="@+id/activitiesTextImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/import_activities_status"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="@+id/statusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/statusTextView" />
+
+
+        <TextView
+            android:id="@+id/historyTextImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:text="@string/import_history_status"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="@+id/statusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/surveysTextImport" />
+
+        <TextView
+            android:id="@+id/surveysTextImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/import_wellbeing_logs_status"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="@+id/statusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/activitiesTextImport" />
+
+
+        <TextView
+            android:id="@+id/schedulesTextImport"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/import_schedules_status"
+            android:textAppearance="?attr/textAppearanceBody2"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintStart_toStartOf="@+id/statusTextView"
+            app:layout_constraintTop_toBottomOf="@+id/historyTextImport" />
+
+        <TextView
+            android:id="@+id/statusTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="@string/import_status"
+            android:textAppearance="?attr/textAppearanceHeadline6"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/import_error"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/import_button">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/icon_error"
+            app:tint="@color/design_default_color_error" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/import_error" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

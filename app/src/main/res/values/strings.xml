@@ -141,6 +141,25 @@
     <string name="settings_category_experimental">Experimental settings</string>
     <string name="inspire_feed">Inspire</string>
 
+    <!-- Import/export -->
+    <string name="import_export">App data</string>
+    <string name="export_data">Export</string>
+    <string name="import_data">Import</string>
+    <string name="import_error">An error occurred</string>
+    <string name="import_status">Import status</string>
+    <string name="import_schedules_status">Schedules</string>
+    <string name="import_history_status">History</string>
+    <string name="import_wellbeing_logs_status">Daily logs</string>
+    <string name="import_activities_status">Activities</string>
+    <string name="export_status">Export status</string>
+    <string name="export_schedules_status">Schedules</string>
+    <string name="export_history_status">History</string>
+    <string name="export_wellbeing_logs_status">Daily logs</string>
+    <string name="export_activities_status">Activities</string>
+    <string name="import_dialog_title">Import warning</string>
+    <string name="import_dialog_body">Any data already entered will be lost or altered during import, do you want to continue with the import?</string>
+    <string name="import_dialog_positive_button">Continue</string>
+    <string name="import_dialog_negative_button">Cancel</string>
 
     <string name="error_no_name_entered">Please enter a name</string>
     <string name="error_no_type_selected">Please choose a type</string>
